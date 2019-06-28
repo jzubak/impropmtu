@@ -1,0 +1,21 @@
+{
+  "development": {
+    "username": "root",
+    "password": "Monday15!",
+    "database": "impromptu",
+    "host": "localhost",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "root",
+    "password": "",
+    "database": "impromptu",
+    "host": "localhost",
+    "dialect": "mysql",
+    "logging": false
+  },
+  "production": {
+    "use_env_variable": "JAWSDB_URL",
+    "dialect": "mysql"
+  }
+}
