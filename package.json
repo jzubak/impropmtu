@@ -22,7 +22,8 @@
   "dependencies": {
     "axios": "^0.18.0",
     "express": "^4.16.3",
-    "sequalize": "^5.3.16",
+    "mysql2": "^1.6.4",
+    "sequelize": "^4.41.2",
     "if-env": "^1.0.4"
   }
 }
