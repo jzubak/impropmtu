@@ -1,4 +1,4 @@
-import React from "./node_modules/react";
+import React from "react";
 
 // This file exports the Input, TextArea, and FormBtn components
 

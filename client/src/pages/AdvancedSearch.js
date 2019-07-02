@@ -1,9 +1,12 @@
-import React, { Component } from "./node_modules/react";
+import React, { Component } from "react";
 import API from "../utils/API";
 import { Col, Row, Container } from "../components/Grid";
 import { Input, FormBtn } from "../components/Form";
+import Tag from "../components/Tag"
+import Button from "../components/button";
 
-const tags = ["Beach", "Urban", "Hiking", "Food", "Nightlife", "Sports" , "Music", "LaidBack", "Ski"]
+const tags = ["Beach", "Urban", "Hiking", "Food", "Nightlife", "Sports" , "Music", "LaidBack", "Ski"];
+const level = ["0-1","2-3","4-5"]
 
 class AdvancedSearch extends Component {
   state = {
@@ -20,7 +23,7 @@ class AdvancedSearch extends Component {
     Music: "0",
     LaidBack: "0",
     Ski: "0",
-    class: "",
+    level: "",
   };
 
   handleInputChange = event => {
@@ -75,7 +78,20 @@ class AdvancedSearch extends Component {
                 placeholder="How much you got to spend?"
               />
               <div>
-                
+              {tags.map(item => (
+              <Tag 
+                tag = {item}
+                id = {item}
+              />
+              ))}
+              </div>
+              <div>
+              {level.map(item => (
+              <Button 
+                level = {item}
+                id = {item}
+              />
+              ))}
               </div>
               <FormBtn
                 disabled={!(this.state.author && this.state.title)}
