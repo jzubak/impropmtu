@@ -1,13 +1,28 @@
-const sequalize = require("sequlaize");
-const Schema = sequalize.Schema;
+module.exports = function(sequelize, DataTypes) {
+    var Desination = sequelize.define("Destation", {
+        Option1: DataTypes.INTEGER,
+        Option2: DataTypes.INTEGER,
+        Option3: DataTypes.INTEGER,
+        Option4: DataTypes.INTEGER,
+        Option5: DataTypes.INTEGER,
+        Option6: DataTypes.INTEGER,
+        Option7: DataTypes.INTEGER,
+        Option8: DataTypes.INTEGER
+        });
+    Destination.associate = function(models) {
+        Destination.hasMany(models.SearchResult, {
 
-const destinationSchema = new Schema({
-  title: { type: String, required: true },
-  author: { type: String, required: true },
-  synopsis: String,
-  date: { type: Date, default: Date.now }
-});
+        })
+        Desination.hasMany(models.IMGresult, {
 
-const Trip = sequalize.model("Trip", destinationSchema);
+        })
+        Destination.belongsTo(models.Airport, {  
+            foreignKey: {
+            allowNull: false
+          }
+        });
+      };
+      return Destination;
 
-module.exports = Trip;
+  };
+

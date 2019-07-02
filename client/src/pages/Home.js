@@ -1,23 +1,24 @@
 import React, { Component } from "react";
-import DeleteBtn from "../components/DeleteBtn";
-import Jumbotron from "../components/Jumbotron";
-import API from "../utils/API";
 import { Link } from "react-router-dom";
+// import DeleteBtn from "../components/DeleteBtn";
+// import Jumbotron from "../components/Jumbotron";
+import API from "../utils/API";
+// import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../components/Grid";
-import { List, ListItem } from "../components/List";
-import { Input, TextArea, FormBtn } from "../components/Form";
+// import { List, ListItem } from "../components/List";
+import { Input, FormBtn } from "../components/Form";
 
-class Books extends Component {
+class Home extends Component {
   state = {
-    books: [],
-    title: "",
-    author: "",
-    synopsis: ""
+    from: "",
+    depart: "",
+    return: "",
+    budget: ""
   };
 
-  componentDidMount() {
-    this.loadBooks();
-  }
+  // componentDidMount() {
+  //   this.loadBooks();
+  // }
 
   loadBooks = () => {
     API.getBooks()
@@ -42,11 +43,12 @@ class Books extends Component {
 
   handleFormSubmit = event => {
     event.preventDefault();
-    if (this.state.title && this.state.author) {
-      API.saveBook({
-        title: this.state.title,
-        author: this.state.author,
-        synopsis: this.state.synopsis
+    if (this.state.from && this.state.depart) {
+      API.savetrip({
+        from: this.state.from,
+        depart: this.state.depart,
+        return: this.state.return,
+        budget: this.state.budget
       })
         .then(res => this.loadBooks())
         .catch(err => console.log(err));
@@ -58,37 +60,46 @@ class Books extends Component {
       <Container fluid>
         <Row>
           <Col size="md-6">
-            <Jumbotron>
+            {/* <Jumbotron>
               <h1>What Books Should I Read?</h1>
-            </Jumbotron>
+            </Jumbotron> */}
             <form>
               <Input
-                value={this.state.title}
+                value={this.state.from}
                 onChange={this.handleInputChange}
-                name="title"
-                placeholder="Title (required)"
+                name="from"
+                placeholder="Where do you want to start?"
               />
               <Input
-                value={this.state.author}
+                value={this.state.depart}
                 onChange={this.handleInputChange}
-                name="author"
-                placeholder="Author (required)"
+                name="depart"
+                placeholder="date"
               />
-              <TextArea
-                value={this.state.synopsis}
+              <Input
+                value={this.state.return}
                 onChange={this.handleInputChange}
-                name="synopsis"
-                placeholder="Synopsis (Optional)"
+                name="return"
+                placeholder="date"
+              />
+              <Input
+                value={this.state.budget}
+                onChange={this.handleInputChange}
+                name="budget"
+                placeholder="How much you got to spend?"
               />
               <FormBtn
                 disabled={!(this.state.author && this.state.title)}
                 onClick={this.handleFormSubmit}
               >
-                Submit Book
+                GO
+              </FormBtn>
+              <FormBtn>
+                <Link to="/"> ADVANCED SEARCH </Link>
               </FormBtn>
             </form>
           </Col>
-          <Col size="md-6 sm-12">
+          {/* <Col size="md-6 sm-12">
             <Jumbotron>
               <h1>Books On My List</h1>
             </Jumbotron>
@@ -108,11 +119,11 @@ class Books extends Component {
             ) : (
               <h3>No Results to Display</h3>
             )}
-          </Col>
+          </Col> */}
         </Row>
       </Container>
     );
   }
 }
 
-export default Books;
+export default Home;
