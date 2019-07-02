@@ -1,3 +1,5 @@
 module.exports = {
-  Book: require("./airports")
+
+  Trip: require("./airports")
+
 };
