@@ -1,15 +1,15 @@
 module.exports = function(sequelize, DataTypes) {
-    var SearchResult = sequelize.define("URLresult", {
-        0: DataTypes.STRING,
-        1: DataTypes.STRING,
-        2: DataTypes.STRING,
-        3: DataTypes.STRING,
-        4: DataTypes.STRING,
-        5: DataTypes.STRING,
-        6: DataTypes.STRING,
-        7: DataTypes.STRING,
-        8: DataTypes.STRING,        
-        9: DataTypes.STRING  
+    var SearchResult = sequelize.define("SearchResult", {
+      Beach: DataTypes.STRING,
+      Urban: DataTypes.STRING,
+      Hiking: DataTypes.STRING,
+      Food: DataTypes.STRING,
+      Nightlife: DataTypes.STRING,
+      Sports: DataTypes.STRING,
+      Music: DataTypes.STRING,
+      LaidBack: DataTypes.STRING,
+      Ski: DataTypes.STRING,
+      Price: DataTypes.INT
     });
     SearchResult.associate = function(models) {
       SearchResult.belongsTo(models.User, {
@@ -17,7 +17,7 @@ module.exports = function(sequelize, DataTypes) {
           allowNull: false
         }
       })
-      SearchResult.belongsTo(models.destinations, {  
+      SearchResult.belongsTo(models.Users, {  
             foreignKey: {
             allowNull: false
           }
