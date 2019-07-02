@@ -1,20 +1,32 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
-
-const airportSchema = new Schema({
-  code: { type: String, required: true },
-  activity1: { type: INT, required: true },
-  activity2: { type: INT, required: true },
-  activity3: { type: INT, required: true },
-  activity4: { type: INT, required: true },
-  activity5: { type: INT, required: true },
-  activity6: { type: INT, required: true },
-  activity7: { type: INT, required: true },
-  activity8: { type: INT, required: true },
-  activity9: { type: INT, required: true }
+module.exports = function(sequalize, DataTypes){
+const Airport = sequalize.define("Airport",{
+  code: DataTypes.STRING,
+  tag1: DataTypes.STRING,
+  tag2: DataTypes.STRING,
+  tag3: DataTypes.STRING,
+  tag4: DataTypes.STRING,
+  tag5: DataTypes.STRING,
+  tag6: DataTypes.STRING,
+  tag7: DataTypes.STRING,
+  tag8: DataTypes.STRING,
+  tag9: DataTypes.STRING
 });
 
-const Book = mongoose.model("Book", airportSchema);
+Airport.associate = function(models) {
+  Airport.hasMany(models.URLresult, {
+
+  })
+  // Airport.hasMany(models.IMGresult, {
+
+  // })
+  Airport.belongsTo(models.Users, {  
+      foreignKey: {
+      allowNull: false
+    }
+  });
+};
+return Airport;
+
+};
 
 
-module.exports = Book;
