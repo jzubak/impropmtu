@@ -1,7 +1,7 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import React from "./node_modules/react";
+import { BrowserRouter as Router, Route, Switch } from "./node_modules/react-router-dom";
 import Home from "./pages/Home";
-// import Detail from "./pages/Detail";
+import AdvancedSearch from "./pages/AdvancedSearch";
 // import NoMatch from "./pages/NoMatch";
 import Nav from "./components/Nav";
 
@@ -12,9 +12,7 @@ function App() {
         <Nav />
         <Switch>
           <Route exact path="/" component={Home} />
-          {/* <Route exact path="/books" component={Books} /> */}
-          {/* <Route exact path="/books/:id" component={Detail} />
-          <Route component={NoMatch} /> */}
+          <Route exact path="/AdvancedSearch" component={AdvancedSearch} />
         </Switch>
       </div>
     </Router>
