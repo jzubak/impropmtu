@@ -13,7 +13,7 @@ const Airport = sequalize.define("Airport",{
 });
 
 Airport.associate = function(models) {
-  Airport.hasMany(models.URLresult, {
+  Airport.hasMany(models.Searchresult, {
 
   })
   // Airport.hasMany(models.IMGresult, {
