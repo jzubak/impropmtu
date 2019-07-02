@@ -1,11 +1,11 @@
 import React from "react";
 
-function Tag(props){
+function Button(props){
     return(
     <div id={props.id}>
-        {props.tag}
+        {props.level}
     </div>
     )
 }
 
-export default Tag
+export default Button
