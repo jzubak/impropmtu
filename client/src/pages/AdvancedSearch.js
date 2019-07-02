@@ -1,15 +1,26 @@
 import React, { Component } from "./node_modules/react";
-import { Link } from "./node_modules/react-router-dom";
 import API from "../utils/API";
 import { Col, Row, Container } from "../components/Grid";
 import { Input, FormBtn } from "../components/Form";
 
-class Home extends Component {
+const tags = ["Beach", "Urban", "Hiking", "Food", "Nightlife", "Sports" , "Music", "LaidBack", "Ski"]
+
+class AdvancedSearch extends Component {
   state = {
     from: "",
     depart: "",
     return: "",
-    budget: ""
+    budget: "",
+    Beach: "0",
+    Urban: "0",
+    Hiking: "0",    
+    Food: "0",
+    Nightlife: "0",
+    Sports: "0",
+    Music: "0",
+    LaidBack: "0",
+    Ski: "0",
+    class: "",
   };
 
   handleInputChange = event => {
@@ -63,14 +74,14 @@ class Home extends Component {
                 name="budget"
                 placeholder="How much you got to spend?"
               />
+              <div>
+                
+              </div>
               <FormBtn
                 disabled={!(this.state.author && this.state.title)}
                 onClick={this.handleFormSubmit}
               >
                 GO
-              </FormBtn>
-              <FormBtn>
-                <Link to="/AdvancedSearch"> ADVANCED SEARCH </Link>
               </FormBtn>
             </form>
           </Col>
@@ -80,4 +91,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default AdvancedSearch;
