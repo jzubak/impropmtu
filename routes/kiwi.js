@@ -20,3 +20,6 @@ axios.get(`https://api.skypicker.com/flights?flyFrom=${start}&to=${end}&dateFrom
   .finally(function (SearchResults) {
     response.JSON.stringify(SearchResults)
   });
+
+
+  module.exports =  axios

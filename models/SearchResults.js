@@ -8,8 +8,8 @@ module.exports = function(sequelize, DataTypes) {
       Sports: DataTypes.STRING,
       Music: DataTypes.STRING,
       LaidBack: DataTypes.STRING,
-      Ski: DataTypes.STRING,
-      Price: DataTypes.INT
+      Ski: DataTypes.STRING
+      // Price: DataTypes.INT
     });
     SearchResult.associate = function(models) {
       SearchResult.belongsTo(models.User, {
@@ -17,11 +17,11 @@ module.exports = function(sequelize, DataTypes) {
           allowNull: false
         }
       })
-      SearchResult.belongsTo(models.Users, {  
-            foreignKey: {
-            allowNull: false
-          }
-        });
+      // SearchResult.belongsTo(models.Users, {  
+      //       foreignKey: {
+      //       allowNull: false
+      //     }
+      //   });
       };
       return SearchResult;
 

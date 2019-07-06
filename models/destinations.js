@@ -1,5 +1,6 @@
 module.exports = function (sequelize, DataTypes) {
-  var Destination = sequelize.define("Destation", {
+  var Destination = sequelize.define("Destination", {
+    code: DataTypes.STRING,
     CityName: DataTypes.STRING,
     Beach: DataTypes.STRING,
     Urban: DataTypes.STRING,
