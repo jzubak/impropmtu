@@ -11,6 +11,6 @@ export default {
   },
   // Saves a book to the database
   saveTrip: function(tripData) {
-    return axios.post("/api/trip", tripData);
+    return axios.post("/api/search", tripData);
   }
 };
