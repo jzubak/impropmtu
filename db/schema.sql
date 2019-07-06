@@ -1,8 +1,6 @@
--- Drop Database impromptu;
-CREATE DATABASE impromptu;
 use impromptu;
 
-CREATE TABLE city (
+CREATE TABLE airport (
     id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(45) NULL,
 	beach Int(11) NOT NULL,
@@ -14,8 +12,7 @@ CREATE TABLE city (
     ski Int(11) NOT NULL,
     quiet Int(11) NOT NULL,
     kidfriendly Int(11) NOT NULL,
-    PRIMARY KEY (id), 
-    FOREIGN KEY REFERENCES 
+    PRIMARY KEY (id)
   );
   
 INSERT INTO airport (name, beach, urban, hiking, food, nightlife, historic, ski, quiet, kidfriendly)
