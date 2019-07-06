@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import API from "../utils/API";
 import { Col, Row, Container } from "../components/Grid";
-import { Input, FormBtn } from "../components/Form";
+import { Input, FormBtn, Date } from "../components/Form";
 
 class Home extends Component {
   state = {
@@ -45,13 +45,13 @@ class Home extends Component {
                 name="from"
                 placeholder="Where do you want to start?"
               />
-              <Input
+              < Date
                 value={this.state.depart}
                 onChange={this.handleInputChange}
                 name="depart"
                 placeholder="date"
               />
-              <Input
+              < Date
                 value={this.state.return}
                 onChange={this.handleInputChange}
                 name="return"
