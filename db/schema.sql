@@ -1,2 +1,2 @@
-Drop Database impromptu;
+-- Drop Database impromptu;
 CREATE DATABASE impromptu;

@@ -1,11 +1,9 @@
 import React, { Component } from "react";
 import API from "../utils/API";
 import { Col, Row, Container } from "../components/Grid";
-import { Input, FormBtn } from "../components/Form";
-import Tag from "../components/Tag"
-import Button from "../components/button";
+import { Input, FormBtn, Date } from "../components/Form";
 
-const tags = ["Beach", "Urban", "Hiking", "Food", "Nightlife", "Sports" , "Music", "LaidBack", "Ski"];
+const tags = ["Beach", "Urban", "Hiking", "Food", "Nightlife", "Historic" , "Music", "Quiet", "KidFriendly"];
 const level = ["0-1","2-3","4-5"]
 
 class AdvancedSearch extends Component {
@@ -19,12 +17,45 @@ class AdvancedSearch extends Component {
     Hiking: "0",    
     Food: "0",
     Nightlife: "0",
-    Sports: "0",
+    Historic: "0",
     Music: "0",
-    LaidBack: "0",
-    Ski: "0",
+    Quiet: "0",
+    KidFriendly: "0",
     level: "",
   };
+
+  showState = event =>{
+    event.preventDefault(
+      console.log(this.state)
+    )
+  }
+
+  handleTag = event => {
+    event.preventDefault()
+    let { value } = event.target;
+    console.log("value: " + value)
+    console.log("tsv:")
+    console.log(this.state[value])
+    if (this.state[value] === "0"){
+      this.setState({
+        [value]: "1"
+      })
+    }
+    else{
+      this.setState({
+        [value]:"0"
+      })
+    }
+  }
+
+  handleLevel = event => {
+    event.preventDefault()
+   const { value } = event.target;
+      this.setState({
+        level: value
+      })
+    console.log(this.state)
+  }
 
   handleInputChange = event => {
     const { name, value } = event.target;
@@ -36,7 +67,7 @@ class AdvancedSearch extends Component {
   handleFormSubmit = event => {
     event.preventDefault();
     if (this.state.from && this.state.depart) {
-      API.savetrip({
+      API.saveTrip({
         from: this.state.from,
         depart: this.state.depart,
         return: this.state.return,
@@ -59,13 +90,13 @@ class AdvancedSearch extends Component {
                 name="from"
                 placeholder="Where do you want to start?"
               />
-              <Input
+              <Date
                 value={this.state.depart}
                 onChange={this.handleInputChange}
                 name="depart"
                 placeholder="date"
               />
-              <Input
+              <Date
                 value={this.state.return}
                 onChange={this.handleInputChange}
                 name="return"
@@ -79,26 +110,21 @@ class AdvancedSearch extends Component {
               />
               <div>
               {tags.map(item => (
-              <Tag 
-                tag = {item}
-                id = {item}
-              />
+              <button value={item} key ={item} onClick={this.handleTag}>{item}</button>
               ))}
               </div>
               <div>
               {level.map(item => (
-              <Button 
-                level = {item}
-                id = {item}
-              />
+
+              <button value={item} key ={item} onClick={this.handleLevel}>{item}</button>
               ))}
               </div>
               <FormBtn
-                disabled={!(this.state.author && this.state.title)}
                 onClick={this.handleFormSubmit}
               >
                 GO
               </FormBtn>
+              <button onClick={this.showState}>show state</button>
             </form>
           </Col>
         </Row>
