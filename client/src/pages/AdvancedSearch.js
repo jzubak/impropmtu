@@ -3,18 +3,18 @@ import API from "../utils/API";
 import { Col, Row, Container } from "../components/Grid";
 import { Input, FormBtn, Date } from "../components/Form";
 
-const tags = ["Beach", "Urban", "Hiking", "Food", "Nightlife", "Historic" , "Music", "Quiet", "KidFriendly"];
-const level = ["0-1","2-3","4-5"]
+const tags = ["Beach", "Urban", "Hiking", "Food", "Nightlife", "Historic", "Music", "Quiet", "KidFriendly"];
+const level = ["0-1", "2-3", "4-5"]
 
 class AdvancedSearch extends Component {
   state = {
     from: "",
     depart: "",
-    return: "",
+    returnn: "",
     budget: "",
     Beach: "0",
     Urban: "0",
-    Hiking: "0",    
+    Hiking: "0",
     Food: "0",
     Nightlife: "0",
     Historic: "0",
@@ -24,7 +24,7 @@ class AdvancedSearch extends Component {
     level: "",
   };
 
-  showState = event =>{
+  showState = event => {
     event.preventDefault(
       console.log(this.state)
     )
@@ -36,24 +36,24 @@ class AdvancedSearch extends Component {
     console.log("value: " + value)
     console.log("tsv:")
     console.log(this.state[value])
-    if (this.state[value] === "0"){
+    if (this.state[value] === "0") {
       this.setState({
         [value]: "1"
       })
     }
-    else{
+    else {
       this.setState({
-        [value]:"0"
+        [value]: "0"
       })
     }
   }
 
   handleLevel = event => {
     event.preventDefault()
-   const { value } = event.target;
-      this.setState({
-        level: value
-      })
+    const { value } = event.target;
+    this.setState({
+      level: value
+    })
     console.log(this.state)
   }
 
@@ -71,9 +71,19 @@ class AdvancedSearch extends Component {
         from: this.state.from,
         depart: this.state.depart,
         return: this.state.return,
-        budget: this.state.budget
+        budget: this.state.budget,
+        Beach: this.state.Beach,
+        Urban: this.state.Urban,
+        Hiking: this.state.Hiking,
+        Food: this.state.Food,
+        Nightlife: this.state.Nightlife,
+        Historic: this.state.Historic,
+        Music: this.state.Music,
+        Quiet: this.state.Quiet,
+        KidFriendly: this.state.KidFriendly,
+        level: this.state.level
       })
-        .then(res => this.loadBooks())
+        // .then(res => this.loadBooks())
         .catch(err => console.log(err));
     }
   };
@@ -109,15 +119,15 @@ class AdvancedSearch extends Component {
                 placeholder="How much you got to spend?"
               />
               <div>
-              {tags.map(item => (
-              <button value={item} key ={item} onClick={this.handleTag}>{item}</button>
-              ))}
+                {tags.map(item => (
+                  <button value={item} key={item} onClick={this.handleTag}>{item}</button>
+                ))}
               </div>
               <div>
-              {level.map(item => (
+                {level.map(item => (
 
-              <button value={item} key ={item} onClick={this.handleLevel}>{item}</button>
-              ))}
+                  <button value={item} key={item} onClick={this.handleLevel}>{item}</button>
+                ))}
               </div>
               <FormBtn
                 onClick={this.handleFormSubmit}
