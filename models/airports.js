@@ -6,10 +6,10 @@ const Airport = sequelize.define("Airport",{
   Hiking: DataTypes.STRING,
   Food: DataTypes.STRING,
   Nightlife: DataTypes.STRING,
-  Sports: DataTypes.STRING,
-  Music: DataTypes.STRING,
-  LaidBack: DataTypes.STRING,
-  Ski: DataTypes.STRING
+  Historic: DataTypes.STRING,
+  Ski: DataTypes.STRING,
+  Quiet: DataTypes.STRING,
+  Kidfriendly: DataTypes.STRING
 });
 
 Airport.associate = function(models) {
