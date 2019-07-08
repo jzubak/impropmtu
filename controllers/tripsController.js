@@ -3,8 +3,8 @@ const db = require("../models");
 // Defining methods for the 
 module.exports = {
   findAll: function(req, res) {
-    console.log(req.query)
-    db.airports
+    console.log(req);
+    db.Trip
       .find(req.query)
       .sort({ date: -1 })
       .then(dbModel => res.json(dbModel))

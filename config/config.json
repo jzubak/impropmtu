@@ -1,14 +1,14 @@
 {
   "development": {
     "username": "root",
-    "password": "tape88white",
+    "password": "Monday15!",
     "database": "impromptu",
     "host": "localhost",
     "dialect": "mysql"
   },
   "test": {
     "username": "root",
-    "password": "",
+    "password": "Monday15!",
     "database": "impromptu",
     "host": "localhost",
     "dialect": "mysql",

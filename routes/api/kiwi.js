@@ -22,5 +22,28 @@ axios.get(`https://api.skypicker.com/flights?flyFrom=${start}&to=${end}&dateFrom
     response.JSON.stringify(SearchResults)
   });
 
+    //this is to move the EtsyApi call off the client side
+    app.post("/api/etsy", function (req, res) {
+        console.log("etsy call hit");
+        var api_key = "oqtjkj73z380crm3r8ia8jbd";
+        var terms = "bohemian";
+        var etsyURL = "https://openapi.etsy.com/v2/listings/active.js?keywords=" +
+          terms + "&category=furniture&limit=12&includes=Images:1&api_key=" + api_key;
+        axios({
+          method: 'post',
+          url: etsyURL,
+          responseType: 'jsonp'
+        })
+          .then(function (data){
+            console.log("etsy function")
+            console.log(data.data)
+            var string = JSON.stringify(data.data);
+            var newString = string.slice(5);
+            // newString.length = newString.length -20;
+            console.log(newString)
+            // console.log(obj.ok)
+            res.send(newString)
+          });
+        });
 
   module.exports =  axios

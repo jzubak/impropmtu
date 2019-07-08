@@ -3,8 +3,8 @@ const tripsController = require("../../controllers/tripsController");
 
 // // Matches with "/api/trips"
 router.route("/")
-  .get(tripsController.findAll)
-  .post(tripsController.findAll);
+  .get(tripsController.findAll);
+  // .post(tripsController.findAll);
 
 // Matches with "/api/trips/:id"
 // router
