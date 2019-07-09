@@ -1,14 +1,14 @@
 module.exports = function(sequelize, DataTypes) {
     var SearchResult = sequelize.define("SearchResult", {
-      Beach: DataTypes.STRING,
-      Urban: DataTypes.STRING,
-      Hiking: DataTypes.STRING,
-      Food: DataTypes.STRING,
-      Nightlife: DataTypes.STRING,
-      Sports: DataTypes.STRING,
-      Music: DataTypes.STRING,
-      LaidBack: DataTypes.STRING,
-      Ski: DataTypes.STRING
+      beach: DataTypes.STRING,
+      urban: DataTypes.STRING,
+      iking: DataTypes.STRING,
+      food: DataTypes.STRING,
+      nightlife: DataTypes.STRING,
+      sports: DataTypes.STRING,
+      music: DataTypes.STRING,
+      laidBack: DataTypes.STRING,
+      ski: DataTypes.STRING
       // Price: DataTypes.INT
     });
     SearchResult.associate = function(models) {
