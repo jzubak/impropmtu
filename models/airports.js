@@ -1,31 +1,33 @@
-module.exports = function(sequelize, DataTypes){
-const Airport = sequelize.define("Airport",{
-  code: DataTypes.STRING,
-  Beach: DataTypes.STRING,
-  Urban: DataTypes.STRING,
-  Hiking: DataTypes.STRING,
-  Food: DataTypes.STRING,
-  Nightlife: DataTypes.STRING,
-  Historic: DataTypes.STRING,
-  Ski: DataTypes.STRING,
-  Quiet: DataTypes.STRING,
-  Kidfriendly: DataTypes.STRING
-});
-
-Airport.associate = function(models) {
-  Airport.hasMany(models.SearchResult, {
-
-  })
-  // Airport.hasMany(models.IMGresult, {
-
-  // })
-  Airport.belongsTo(models.Destination, {  
-      foreignKey: {
-      allowNull: false
-    }
+module.exports = function (sequelize, DataTypes) {
+  var Airport = sequelize.define("Airport", {
+    code: DataTypes.STRING,
+    beach: DataTypes.STRING,
+    urban: DataTypes.STRING,
+    hiking: DataTypes.STRING,
+    food: DataTypes.STRING,
+    nightlife: DataTypes.STRING,
+    historic: DataTypes.STRING,
+    ski: DataTypes.STRING,
+    quiet: DataTypes.STRING,
+    kidfriendly: DataTypes.STRING
+  }, {
+    timestamps: false
   });
-};
-return Airport;
+
+  Airport.associate = function (models) {
+    Airport.hasMany(models.SearchResult, {
+
+    })
+    // Airport.hasMany(models.IMGresult, {
+
+    // })
+    Airport.belongsTo(models.Destination, {
+      foreignKey: {
+        allowNull: false
+      }
+    });
+  };
+  return Airport;
 
 };
 

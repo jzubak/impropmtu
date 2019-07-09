@@ -1,16 +1,15 @@
 module.exports = function (sequelize, DataTypes) {
   var Destination = sequelize.define("Destination", {
-    code: DataTypes.STRING,
-    CityName: DataTypes.STRING,
-    Beach: DataTypes.STRING,
-    Urban: DataTypes.STRING,
-    Hiking: DataTypes.STRING,
-    Food: DataTypes.STRING,
-    Nightlife: DataTypes.STRING,
-    Sports: DataTypes.STRING,
-    Music: DataTypes.STRING,
-    LaidBack: DataTypes.STRING,
-    Ski: DataTypes.STRING
+    cityName: DataTypes.STRING,
+    beach: DataTypes.STRING,
+    urban: DataTypes.STRING,
+    hiking: DataTypes.STRING,
+    food: DataTypes.STRING,
+    nightlife: DataTypes.STRING,
+    historic: DataTypes.STRING,
+    ski: DataTypes.STRING,
+    quiet: DataTypes.STRING,
+    kidfriendly: DataTypes.STRING
   });
   Destination.associate = function (models) {
     Destination.hasMany(models.SearchResult, {
