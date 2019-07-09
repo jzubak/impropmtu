@@ -30,6 +30,7 @@ CREATE TABLE destinations (
     kidfriendly VARCHAR(11) NOT NULL,
     PRIMARY KEY (destinationsID),
     airportID INT NOT NULL,
+    url VARCHAR(255) NOT NULL,
 	  FOREIGN KEY fk_airport(airportID)
     REFERENCES airports(airportID)
   );
