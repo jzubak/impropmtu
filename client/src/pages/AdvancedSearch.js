@@ -92,35 +92,50 @@ class AdvancedSearch extends Component {
     return (
       <Container fluid>
         <Row>
-          <Col size="md-6">
+          <Col size="6">
             <form>
+              <div>From:</div>
               <Input
                 value={this.state.from}
                 onChange={this.handleInputChange}
                 name="from"
                 placeholder="Where do you want to start?"
               />
-              <Date
-                value={this.state.depart}
-                onChange={this.handleInputChange}
-                name="depart"
-                placeholder="date"
-              />
-              <Date
-                value={this.state.return}
-                onChange={this.handleInputChange}
-                name="return"
-                placeholder="date"
-              />
+              <Row>
+                <Col size="6">
+                  <div>Start Date:</div>
+                  <Date
+                    value={this.state.depart}
+                    onChange={this.handleInputChange}
+                    name="depart"
+                    placeholder="date"
+                  />
+                </Col>
+                <Col size="6">
+                  <div>End Date:</div>
+                  <Date
+                    value={this.state.return}
+                    onChange={this.handleInputChange}
+                    name="return"
+                    placeholder="date"
+                  />
+                </Col>
+              </Row>
+                <div>Budget:</div>  
               <Input
                 value={this.state.budget}
                 onChange={this.handleInputChange}
                 name="budget"
                 placeholder="How much you got to spend?"
               />
+            </form>
+          </Col>
+          <Col size="6">
+            <form>
+              <div>What type of trip are you looking for?</div>
               <div>
                 {tags.map(item => (
-                  <button value={item} key={item} onClick={this.handleTag}>{item}</button>
+                  <button className="m-1 p-1  bg-light rounded" value={item} key={item} onClick={this.handleTag}>{item}</button>
                 ))}
               </div>
               <div>
@@ -134,7 +149,7 @@ class AdvancedSearch extends Component {
               >
                 GO
               </FormBtn>
-              <button onClick={this.showState}>show state</button>
+              {/* <button onClick={this.showState}>show state</button> */}
             </form>
           </Col>
         </Row>
