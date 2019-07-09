@@ -16,23 +16,23 @@ router.route('/api/search').post(function(req, res) {
     console.log('in search route');
     console.log(req.body)
     // do more stuff here
-    db.Airport.findAll({
-      // console.log("in search")
-      where: {
-          Beach: req.body.Beach,
-          Urban: req.body.Urban,
-          Hiking: req.body.Hiking,
-          Food: req.body.Food,
-          Nightlife: req.body.Nightlife,
-          Historic: req.body.Historic,
-          Ski: req.body.Ski,
-          Quiet: req.body.Quiet,
-          Kidfriendly: req.body.Kidfriendly}
+    db.Airport.findOne({where: {Beach : 0}
+      // where: {
+      //     Beach: req.body.Beach
+      //     Urban: req.body.Urban,
+      //     Hiking: req.body.Hiking,
+      //     Food: req.body.Food,
+      //     Nightlife: req.body.Nightlife,
+      //     Historic: req.body.Historic,
+      //     Ski: req.body.Ski,
+      //     Quiet: req.body.Quiet,
+      //     Kidfriendly: req.body.Kidfriendly}
       }).then(function(dbFilter){
-          console.log("out of the databse query")
+          console.log("out of the databse query");
           res.json(dbFilter)
           console.log(dbFilter)
       }).catch(function(err){
+      console.log(err);
       res.json(err);
   })
 })

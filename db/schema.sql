@@ -18,7 +18,7 @@ CREATE TABLE airports (
 
 CREATE TABLE destinations (
 	destinationsID INT NOT NULL AUTO_INCREMENT,
-    code VARCHAR (255) NOT NULL,
+    cityName VARCHAR (255) NOT NULL,
 	beach Int(11) NOT NULL,
     urban Int(11) NOT NULL,
     hiking Int(11) NOT NULL,
@@ -31,5 +31,5 @@ CREATE TABLE destinations (
     PRIMARY KEY (destinationsID),
     airportID INT NOT NULL,
 	FOREIGN KEY fk_airport(airportID)
-    REFERENCES airport(airportID)
+    REFERENCES airports(airportID)
   );
