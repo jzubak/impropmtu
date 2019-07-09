@@ -27,15 +27,36 @@ router.route('/api/search').post(function(req, res) {
           {ski: req.body.Music},
           {quiet: req.body.Quiet},
           {kidfriendly: req.body.KidFriendly}]}
-      }).then(function(dbFilter){
-          console.log("out of the databse query");
-          res.json(dbFilter)
-          console.log(dbFilter)
-      }).catch(function(err){
+        }).then(function(dbFilter){
+            console.log("out of the databse query");
+            console.log("---------------------------", req.body);
+            // console.log(dbFilter);
+            var initialres = JSON.stringify(dbFilter);
+            console.log("this is the inital results")
+            console.log(initialres)
+            console.log("in the 2nd call")
+          db.Destination.findAll({
+            where: {
+            beach: req.body.Beach,
+            urban: req.body.Urban,
+            hiking: req.body.Hiking,
+            food: req.body.Food,
+            nightlife: req.body.Nightlife,
+            historic: req.body.Historic,
+            ski: req.body.Music,
+            quiet: req.body.Quiet,
+            kidfriendly: req.body.KidFriendly,
+          }
+          })}).then(function(destinationFilter){
+            console.log("filtered through destination table")
+            console.log(destinationFilter)
+          }).catch(function(err){
       console.log(err);
       res.json(err);
   })
-})
+});
+
+
 
 // If no API routes are hit, send the React app
 router.use(function(req, res) {
