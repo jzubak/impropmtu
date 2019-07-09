@@ -1,10 +1,9 @@
-use impromptu;
-
 INSERT INTO airports (code, beach, urban, hiking, food, nightlife, historic, ski, quiet, kidfriendly)
 VALUES ("PHL", 1, 1, 0, 1, 1, 1, 0, 1, 1);
 
 INSERT INTO airports (code, beach, urban, hiking, food, nightlife, historic, ski, quiet, kidfriendly)
 VALUES ("ATL", 0, 1, 1, 1, 1,1, 0, 1, 1);
+use impromptu; 
 
 INSERT INTO airports (code, beach, urban, hiking, food, nightlife, historic, ski, quiet, kidfriendly)
 VALUES ("LAX", 1, 1, 1, 1, 1, 1, 0, 1, 1);
