@@ -1,8 +1,10 @@
 const path = require("path");
 const router = require("express").Router();
 const sequelize = require("sequelize");
+const Sequalize = require("Sequelize");
 const apiRoutes = require("./api");
-const db = require("../models")
+const db = require("../models");
+const Op = Sequalize.Op;
 
 // API Routes
 router.use("/api", apiRoutes);
@@ -15,18 +17,16 @@ router.use("/api", apiRoutes);
 router.route('/api/search').post(function(req, res) {
     console.log('in search route');
     console.log(req.body)
-    // do more stuff here
-    db.Airport.findOne({where: {Beach : 0}
-      // where: {
-      //     Beach: req.body.Beach
-      //     Urban: req.body.Urban,
-      //     Hiking: req.body.Hiking,
-      //     Food: req.body.Food,
-      //     Nightlife: req.body.Nightlife,
-      //     Historic: req.body.Historic,
-      //     Ski: req.body.Ski,
-      //     Quiet: req.body.Quiet,
-      //     Kidfriendly: req.body.Kidfriendly}
+    db.Airport.findAll({where: {
+          Beach: req.body.Beach,
+          Urban: req.body.Urban,
+          Hiking: req.body.Hiking,
+          Food: req.body.Food,
+          Nightlife: req.body.Nightlife,
+          Historic: req.body.Historic,
+          Ski: req.body.Ski,
+          Quiet: req.body.Quiet,
+          Kidfriendly: req.body.Kidfriendly}
       }).then(function(dbFilter){
           console.log("out of the databse query");
           res.json(dbFilter)
