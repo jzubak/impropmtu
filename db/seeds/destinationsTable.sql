@@ -1,5 +1,3 @@
-use impromptu;
-
 INSERT INTO destinations (cityname, beach, urban, hiking, food, nightlife, historic, ski, quiet, kidfriendly, airportID, url)
 VALUES ("Philadelphia, PA", 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, "https://res.cloudinary.com/nikza/image/upload/v1562628884/Philadelphia_PA_yowvgm.jpg");
 
