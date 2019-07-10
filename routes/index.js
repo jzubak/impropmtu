@@ -30,11 +30,12 @@ router.route('/api/search').post(function(req, res) {
         }).then(function(dbFilter){
             console.log("out of the databse query");
             console.log("---------------------------", req.body);
-            // console.log(dbFilter);
+            console.log(dbFilter);
             var initialres = JSON.stringify(dbFilter);
             console.log("this is the inital results")
             console.log(initialres)
             console.log("in the 2nd call")
+
           db.destination.findAll({
             where: {
             beach: req.body.Beach,

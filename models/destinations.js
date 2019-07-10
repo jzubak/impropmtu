@@ -2,7 +2,8 @@ module.exports = function (sequelize, DataTypes) {
   var Destination = sequelize.define("destination", {
     destinationsID: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      primaryKey: true
     },
     cityName: {
       type: DataTypes.STRING,
@@ -60,7 +61,8 @@ module.exports = function (sequelize, DataTypes) {
     {
       timestamps: false
 
-    });
+    },
+    {freezeTableName: true});
   Destination.associate = function (models) {
     Destination.hasMany(Airport)
 

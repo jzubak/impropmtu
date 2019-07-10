@@ -1,7 +1,7 @@
 //this will belong to search results?
 module.exports = function (sequalize, Sequelize) {
     const User = sequalize.define("User",{
-        id: {
+        userID: {
             autoIncrement: true,
             primaryKey: true,
             type: Sequelize.INTEGER
