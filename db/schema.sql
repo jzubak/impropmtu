@@ -35,7 +35,24 @@ CREATE TABLE destinations (
 	  FOREIGN KEY fk_airport(airportID)
     REFERENCES airports(airportID)
   );
-
+  CREATE TABLE searchResults (
+    ID INT AUTO_INCREMENT NOT NULL,
+	  from VARCHAR (3) NOT NULL,
+    depart VARCHAR (8) NOT NULL,
+    return VARCHAR (8) NOT NULL,
+    budget INT (50),
+	  beach VARCHAR (1) NOT NULL,
+    urban VARCHAR (1) NOT NULL,
+    hiking VARCHAR (1) NOT NULL,
+    food VARCHAR (1) NOT NULL,
+    nightlife VARCHAR (1) NOT NULL,
+    historic VARCHAR (1) NOT NULL,
+    ski VARCHAR (1) NOT NULL,
+    quiet VARCHAR (1) NOT NULL,
+    kidfriendly VARCHAR (1) NOT NULL, 
+    level INT (1),
+    PRIMARY KEY (ID),
+  );
 use impromptu;
 
 INSERT INTO airports (airportID, code, beach, urban, hiking, food, nightlife, historic, ski, quiet, kidfriendly)

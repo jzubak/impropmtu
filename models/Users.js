@@ -48,12 +48,12 @@ module.exports = function (sequalize, Sequelize) {
  
  
     });
-    // User.associate = function(models) {
+    User.associate = function(models) {
   
-    //     User.hasMany(models.SearchResults, {
-    //       onDelete: "cascade"
-    //     });
-    //   };
+        User.hasMany(models.SearchResults, {
+          onDelete: "cascade"
+        });
+      };
  
     return User;
  
