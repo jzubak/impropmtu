@@ -4,11 +4,14 @@ import Home from "./pages/Home";
 import AdvancedSearch from "./pages/AdvancedSearch";
 import Results from "./pages/Results"
 import Nav from "./components/Nav";
+import "./style.css"
+import Footer from "./components/Footer"
 
 function App() {
   return (
+    <div>
     <Router>
-      <div>
+      <div className="content">
         <Nav />
         <Switch>
           <Route exact path="/" component={Home} />
@@ -17,6 +20,8 @@ function App() {
         </Switch>
       </div>
     </Router>
+    <Footer></Footer>
+    </div>
   );
 }
 

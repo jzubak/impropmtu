@@ -10,8 +10,8 @@ function BackgroundImage(props){
         height: "100%",
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
-        backgroundPosition: "50% 50%" ,
-        zIndex: -10
+        backgroundPosition: "50% 0%" ,
+        zIndex: -10,
       };
 
     return(

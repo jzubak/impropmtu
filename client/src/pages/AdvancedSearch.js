@@ -35,9 +35,9 @@ class AdvancedSearch extends Component {
   handleTag = event => {
     event.preventDefault()
     let { value } = event.target;
-    console.log("value: " + value)
-    console.log("tsv:")
-    console.log(this.state[value])
+    // console.log("value: " + value)
+    // console.log("tsv:")
+    // console.log(this.state[value])
     if (this.state[value] === "0") {
       this.setState({
         [value]: "1"
@@ -56,7 +56,7 @@ class AdvancedSearch extends Component {
     this.setState({
       level: value
     })
-    console.log(this.state)
+    // console.log(this.state)
   }
 
   handleInputChange = event => {
@@ -140,14 +140,13 @@ class AdvancedSearch extends Component {
                 <div className="font twentypxfont">What type of trip are you looking for?</div>
                 <div>
                   {tags.map(item => (
-                    <button id={item} className={this.state[item] === "0" ? "m-1 py-1 px-2 bg-light radius25px border2px font twentypxfont" : "m-1 py-1 px-2 bg-light radius25px border2px font twentypxfont blue"} value={item} key={item} onClick={this.handleTag}>{item}</button>
+                    <button id={item} className={this.state[item] === "0" ? "m-1 py-1 px-2 bg-light radius25px border2px font twentypxfont blueborder pointer focus" : "m-1 py-1 px-2 bg-light radius25px border2px font twentypxfont blueborder pointer focus blue"} value={item} key={item} onClick={this.handleTag}>{item}</button>
                   ))}
                 </div>
                 <div className="font twentypxfont">What are your standards?</div>
                 <div>
                   {level.map(item => (
-
-                    <button className="m-1 py-1 px-2 bg-light radius25px border2px font twentypxfont" value={item} key={item} onClick={this.handleLevel}>{item}</button>
+                    <button className={this.state.level === item ? "m-1 py-1 px-2 bg-light radius25px border2px font twentypxfont blueborder pointer focus blue" : "m-1 py-1 px-2 bg-light radius25px border2px font twentypxfont blueborder pointer focus"} value={item} key={item} onClick={this.handleLevel}>{item}</button>
                   ))}
                 </div>
                 <FormBtn
