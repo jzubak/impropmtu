@@ -36,6 +36,10 @@ CREATE TABLE destinations (
     REFERENCES airports(airportID)
   );
 
+use impromptu;
+
+INSERT INTO airports (airportID, code, beach, urban, hiking, food, nightlife, historic, ski, quiet, kidfriendly)
+VALUES (1, "PHL", 1, 1, 0, 1, 1, 1, 0, 1, 1);
 INSERT INTO airports (airportID, code, beach, urban, hiking, food, nightlife, historic, ski, quiet, kidfriendly)
 VALUES (2, "ATL", 0, 1, 1, 1, 1,1, 0, 1, 1);
 INSERT INTO airports (airportID, code, beach, urban, hiking, food, nightlife, historic, ski, quiet, kidfriendly)
@@ -62,8 +66,6 @@ INSERT INTO airports (airportID, code, beach, urban, hiking, food, nightlife, hi
 VALUES (13, "PHX", 0, 1, 1, 1, 1, 1, 0, 1, 1);
 INSERT INTO airports (airportID, code, beach, urban, hiking, food, nightlife, historic, ski, quiet, kidfriendly)
 VALUES (14, "EWR", 1, 1, 1, 1, 1, 1, 1, 1, 1);
-
-
 INSERT INTO destinations (destinationsID, cityname, beach, urban, hiking, food, nightlife, historic, ski, quiet, kidfriendly, airportID, url)
 VALUES (1, "Philadelphia, PA", 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, "https://res.cloudinary.com/nikza/image/upload/v1562628884/Philadelphia_PA_yowvgm.jpg");
 
