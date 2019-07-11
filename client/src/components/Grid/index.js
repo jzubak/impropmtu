@@ -3,8 +3,20 @@ import React from "react";
 // Exporting the Container, Row, and Col components from this file
 
 // This Container component allows us to use a bootstrap container without worrying about class names
-export function Container({ fluid, children }) {
-  return <div className={`container${fluid ? "-fluid" : ""}`}>{children}</div>;
+export function Container({ fluid, children, maxwidth }) {
+  
+  var x = {
+    maxWidth : maxwidth,
+    marginTop: "10px",
+    borderWidth: "10px",
+    borderColor: "#3a878f",
+    borderStyle: "Solid", 
+    padding: "20px",
+    background: "rgba(255, 255, 255, 0.9)",
+    borderRadius: "30px",
+  }
+
+  return <div style={x} className={`container${fluid ? "-fluid" : ""}`}>{children}</div>;
 }
 
 // This Row component lets us use a bootstrap row without having to think about class names

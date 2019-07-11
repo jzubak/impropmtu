@@ -1,16 +1,27 @@
 import React from "react";
+import "./style.css"
 
 // This file exports the Input, TextArea, and FormBtn components
 
 export function Input(props) {
+
+  const fontstyle = {
+    fontFamily: "din-2014, sans-serif",
+    fontWeight: "400",
+    fontStyle: "normal",
+    color: "#3a878f"
+  }
+
+
   return (
     <div className="form-group">
-      <input className="form-control" {...props} />
+      <input style={fontstyle} className="form-control" {...props} />
     </div>
   );
 }
 
 export function TextArea(props) {
+  
   return (
     <div className="form-group">
       <textarea className="form-control" rows="20" {...props} />
@@ -27,9 +38,16 @@ export function FormBtn(props) {
 }
 
 export function Date (props) {
+  const fontstyle = {
+    fontFamily: "din-2014, sans-serif",
+    fontWeight: "400",
+    fontStyle: "normal",
+    color: "#3a878f"
+  }
+
   return (
     <div className="form-group">
-      <input className="form-control" type="date" {...props} />
+      <input style={fontstyle} className="form-control" type="date" {...props} />
     </div>
   );
 }
