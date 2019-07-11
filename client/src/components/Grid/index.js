@@ -14,6 +14,7 @@ export function Container({ fluid, children, maxwidth }) {
     padding: "20px",
     background: "rgba(255, 255, 255, 0.9)",
     borderRadius: "30px",
+    marginBottom: "25px",
   }
 
   return <div style={x} className={`container${fluid ? "-fluid" : ""}`}>{children}</div>;
