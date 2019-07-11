@@ -1,0 +1,29 @@
+.height {
+    height: 40px;
+}
+
+.posabsolute{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: -1;
+    height: 70px;
+}
+
+.w100{
+    width: 100%
+}
+
+.icon{
+    display: none;
+}
+
+@media only screen and (max-width: 700px) {
+    .icon{
+      display: block;
+    }
+
+    .full{
+        display: none;
+    }
+  }
