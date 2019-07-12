@@ -1,49 +1,41 @@
 const axios = require('axios');
 
 //this is the kiwi api search
-let start = "PHL";
-let end = "LAX";
+let startLocal = "PHL";
+let endLocal = "ATL";
 
 //format in DD/MM/YYYY
-let depart = "08/01/2019";
-let returnn = "09/01/2019";
+let departDate = "01/09/2019";
+let returnDate = "03/09/2019";
+
+//add variable extension
+let term = startLocal;
+let locale = "USD";
+let location_types = "airport" ;
+let limit = "10";
+let active_only = "true";
+let sort = "price";
 
 // Make a request from Kiwi
-axios.get(`https://api.skypicker.com/flights?flyFrom=${start}&to=${end}&dateFrom=${depart}&dateTo=${returnn}&partner=picky`)
+axios.get(`https://api.skypicker.com/flights?flyFrom=${startLocal}&to=${endLocal}&dateFrom=${departDate}&dateTo=${returnDate}&partner=picky/locations?term=${term}&locale=${locale}&location_types=${location_types}&limit=${limit}&active_only=${active_only}&sort=${sort}&curr=USD`)
+
+
   .then(function (response) {
-    // handle success
-    console.log(response);
+
+    let resArray = []
+
+    // console.log(response.data.data[].price)
+    for (let i=0; i < 10; i++ ){
+      resArray.push(response.data.data[i].price)
+      
+    }
+  
+    console.log(resArray);
   })
   .catch(function (error) {
     // handle error
     console.log(error);
   })
   .finally(function (SearchResults) {
-    response.JSON.stringify(SearchResults)
+    // response.JSON.stringify(SearchResults)
   });
-
-    //this is to move the EtsyApi call off the client side
-    app.post("/api/etsy", function (req, res) {
-        console.log("etsy call hit");
-        var api_key = "oqtjkj73z380crm3r8ia8jbd";
-        var terms = "bohemian";
-        var etsyURL = "https://openapi.etsy.com/v2/listings/active.js?keywords=" +
-          terms + "&category=furniture&limit=12&includes=Images:1&api_key=" + api_key;
-        axios({
-          method: 'post',
-          url: etsyURL,
-          responseType: 'jsonp'
-        })
-          .then(function (data){
-            console.log("etsy function")
-            console.log(data.data)
-            var string = JSON.stringify(data.data);
-            var newString = string.slice(5);
-            // newString.length = newString.length -20;
-            console.log(newString)
-            // console.log(obj.ok)
-            res.send(newString)
-          });
-        });
-
-  module.exports =  axios
