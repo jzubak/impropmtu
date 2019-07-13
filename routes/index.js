@@ -132,10 +132,13 @@ const axiosKiwi = function () {
         }))
           // console.log(mappedFlights[1]);
           depSearchObj.flights = mappedFlights
-          console.log(depSearchObj);
+          // console.log(depSearchObj);
+          depArray = Array.from(Object.keys(depSearchObj), k=>[`${k}`, depSearchObj[k]]);
+          // console.log(depArray[0], depArray[1], depArray[2])
+          res.json(depArray)
         })
         .catch(function (error) {
-          // res.json(error)
+          res.json(error)
           console.log(error);
         });
       };
@@ -163,7 +166,9 @@ const axiosKiwi = function () {
           }))
             // console.log(retMappedFlights[1]);
             retSearchObj.flights = retMappedFlights
-            console.log('*****************',retSearchObj);
+            retArray = Array.from(Object.keys(retSearchObj), k=>[`${k}`, retSearchObj[k]]);
+          console.log(retArray[0], retArray[1], retArray[2])
+          // res.json(retArray)
           })
           .catch(function (error) {
             // res.json(error)
