@@ -94,12 +94,10 @@ const axiosKiwi = function () {
   const departDate1 = userInput.depart;
   let departFormat = departDate1.split("-")
   departDate.push(departFormat[2] + '/' + departFormat[1] + '/' + departFormat[0])
-    
-  
+
   let returnDate1 = userInput.return;
   let returnFormat = returnDate1.split("-")
   returnDate.push(returnFormat[2] + '/' + returnFormat[1] + '/' + returnFormat[0])
-    
 
   // console.log(departDate);
   console.log("TEST DATA: ", startLocal, endLocal, departDate, returnDate)
@@ -112,60 +110,58 @@ const axiosKiwi = function () {
   let limit = "10";
   let active_only = "true";
   let sort = "price";
-  let depArray = []
+  let depArray = [];
+  let retArray = [];
   // Make a request from departure flight Kiwi
-  for (i = 0; i < endLocal.length; i++){
-    console.log("inside the kiwi axios call for loop")
-  axios.get(`https://api.skypicker.com/flights?flyFrom=${startLocal}&to=${endLocal[i]}&dateFrom=${departDate}&dateTo=${returnDate}&partner=picky/locations?term=${term}&locale=${locale}&location_types=${location_types}&limit=${limit}&active_only=${active_only}&sort=${sort}&curr=USD`)
-
-
-    .then(function(depSearch) {
-
-      // console.log(response.data.data[0].price)
-      for (let i = 0; i < 10; i++) {
-        depArray.push(depSearch.data.data[i].price)
-      }
-      depArray.sort(function (a, b) { return a - b })
-
-      console.log('******INSIDE THE FOR LOOP DEP ARRAY', depArray);
-    })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
-    })
-    // .finally(function (depSearchResults) {
-    //   depSearch.JSON.stringify(depSearchResults)
-    //   console.log(depSearchResults)
-      // return(depSearchResults)
-    // });
+  for (let i = 0; i < endLocal.length; i++) {
+    // console.log("inside the kiwi axios call for loop " + [i])
+    let currentEndLocal = endLocal[i]
+    let depSearchObj = {
+      endIATA: currentEndLocal,
+      prices: [],
+      airlineIATA: []
+    }
+    axios.get(`https://api.skypicker.com/flights?flyFrom=${startLocal}&to=${endLocal[i]}&dateFrom=${departDate}&dateTo=${returnDate}&partner=picky/locations?term=${term}&locale=${locale}&location_types=${location_types}&limit=${limit}&active_only=${active_only}&sort=${sort}&curr=USD`)
+      .then(function (depSearch) {
+        // console.log(endLocal[1])
+        console.log('this is current', currentEndLocal)
+        // console.log(depSearch.data.data[0].price)
+        for (let j = 0; j < 10; j++) {
+        // console.log('inside the for loop', depSearch.data.data[0])
+          depSearchObj.prices.push(depSearch.data.data[j].price)
+        }
+        depSearchObj.prices.sort(function (low, high) { return low - high })
+        depArray.push(depSearchObj)
+        console.log(depArray)
+      }).catch(function (error) {
+        // handle error
+        console.log(error);
+      });
   };
-console.log('***********OUTSIDE THE FOR LOOP DEP ARRAY', depArray);
 
   // Make a request from Kiwi
-  axios.get(`https://api.skypicker.com/flights?flyFrom=${endLocal}&to=${startLocal}&dateFrom=${departDate}&dateTo=${returnDate}&partner=picky/locations?term=${term}&locale=${locale}&location_types=${location_types}&limit=${limit}&active_only=${active_only}&sort=${sort}&curr=USD`)
+  for (i = 0; i < endLocal.length; i++) {
+    axios.get(`https://api.skypicker.com/flights?flyFrom=${endLocal}&to=${startLocal}&dateFrom=${departDate}&dateTo=${returnDate}&partner=picky/locations?term=${term}&locale=${locale}&location_types=${location_types}&limit=${limit}&active_only=${active_only}&sort=${sort}&curr=USD`)
 
 
-    .then(function (response) {
+      .then(function (retSearch) {
+        // console.log(response.data.data[].price)
+        for (let i = 0; i < 10; i++) {
+          retArray.push(retSearch.data.data[i].price);
+        }
+        retArray.sort(function (a, b) { return a - b })
 
-
-      let resArray = []
-      // console.log(response.data.data[].price)
-      for (let i = 0; i < 10; i++) {
-        resArray.push(response.data.data[i].price);
-      }
-
-      resArray.sort(function (a, b) { return a - b })
-
-      // console.log(resArray);
-    })
-    .catch(function (error) {
-      // handle error
-      // console.log(error);
-    })
-    .finally(function (SearchResults) {
-      // response.JSON.stringify(SearchResults)
-    });
-
+        // console.log(resArray);
+      })
+      .catch(function (error) {
+        // handle error
+        // console.log(error);
+      })
+      .finally(function (retResults) {
+        response.JSON.stringify(retResults)
+      });
+  };
+  // console.log('******OUTSIDE THE FOR LOOP DEP ARRAY', retArray[1]);
 };
 
 
