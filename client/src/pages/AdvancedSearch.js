@@ -80,7 +80,7 @@ class AdvancedSearch extends Component {
         Food: this.state.Food,
         Nightlife: this.state.Nightlife,
         Historic: this.state.Historic,
-        Music: this.state.Music,
+        Ski: this.state.Ski,
         Quiet: this.state.Quiet,
         KidFriendly: this.state.KidFriendly,
         level: this.state.level

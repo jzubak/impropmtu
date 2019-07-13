@@ -35,11 +35,11 @@ CREATE TABLE destinations (
 	  FOREIGN KEY fk_airport(airportID)
     REFERENCES airports(airportID)
   );
-  CREATE TABLE searchResults (
+  CREATE TABLE SearchResults (
     ID INT AUTO_INCREMENT NOT NULL,
 	  from VARCHAR (3) NOT NULL,
     depart VARCHAR (8) NOT NULL,
-    return VARCHAR (8) NOT NULL,
+    returnn VARCHAR (8) NOT NULL,
     budget INT (50),
 	  beach VARCHAR (1) NOT NULL,
     urban VARCHAR (1) NOT NULL,

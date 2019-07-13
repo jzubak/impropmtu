@@ -13,9 +13,9 @@ exports.signin = function(req, res) {
  
 }
  
-exports.quiz = function(req, res) {
+exports.SearchResults = function(req, res) {
     
-    res.render('quiz');
+    res.render('searchResults');
  
 }
 
