@@ -28,7 +28,7 @@ router.route('/api/search').post(function (req, res) {
         { kidfriendly: req.body.KidFriendly }]
     }
   }).then(function (dbFilter) {
-    let initialres = JSON.stringify(dbFilter);
+    let initialres = dbFilter;
     db.destination.findAll({
       where: {
         beach: req.body.Beach,
@@ -42,16 +42,16 @@ router.route('/api/search').post(function (req, res) {
         kidfriendly: req.body.KidFriendly,
       }
     }).then(function (destinationFilter) {
-      destFiltered = JSON.stringify(destinationFilter);
+      let destFiltered = destinationFilter
       return destFiltered
     }).then(function (endQ, res) {
       // console.log(initialres, endQ)
       // console.log(req.body)
-      userIn = JSON.stringify(req.body)
+      let userIn = req.body
       // res.json({data:{userInput: req.body, airportsArray: initialres, destinationsArray: endQ}})
       qRes.push({userInput: userIn}, {airArray: initialres}, {destArray: endQ})
       
-      console.log(qRes)
+      // console.log(qRes)
     }).then(function(callkiwi){
       //  console.log("this is the qRes data", qRes)
        axiosKiwi(callkiwi);
@@ -78,23 +78,27 @@ router.use(function (req, res) {
 
 const axiosKiwi = function(){
   //this is the kiwi api search
-  let startLocal = qRes[0].userInput[0].from;
-  let endLocal = [];
   
-  // console.log('I********************************',qRes[0])
-    // console.log("---------------------", qRes)
-    for (let i = 0; i < qRes[1].airArray[i].code; i++ ) {
-      endLocal.push(qRes[1].airArray[i].code)
-    }
+
+  const userInput = qRes[0];
+  console.log(userInput)
+  let startLocal = userInput.from;
+  let endLocal = [];
+  const airports = qRes[1].airArray;
+    airports.forEach(element => {
+    // console.log(element.airportID);
+    // console.log(element.code)
+    endLocal.push(element.code)
+  });
+
     // ("this is a for loop over the results looking for airportssArray.initialres.code[i]");
   
   //format in DD/MM/YYYY
-  let departDate = "08/01/2019"
-  // qRes[0].depart;
-  let returnDate = "09/01/2019"
-  //  qRes[0].returnn;
+  let departDate = userInput.depart;
+  let returnDate = userInput.return;
 
-  console.log(startLocal, endLocal, departDate, returnDate)
+  console.log("TEST DATA: ", startLocal, endLocal, departDate, returnDate)
+  // console.log("*********", loopRes)
   
   //add variable extension
   let term = startLocal;
@@ -118,11 +122,11 @@ const axiosKiwi = function(){
       }
       resArray.sort(function(a, b){return a-b})
     
-      console.log(resArray);
+      // console.log(resArray);
     })
     .catch(function (error) {
       // handle error
-      console.log(error);
+      // console.log(error);
     })
     .finally(function (SearchResults) {
       // response.JSON.stringify(SearchResults)
@@ -145,11 +149,11 @@ const axiosKiwi = function(){
   
       resArray.sort(function(a, b){return a-b})
     
-      console.log(resArray);
+      // console.log(resArray);
     })
     .catch(function (error) {
       // handle error
-      console.log(error);
+      // console.log(error);
     })
     .finally(function (SearchResults) {
       // response.JSON.stringify(SearchResults)
