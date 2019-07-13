@@ -93,12 +93,12 @@ const axiosKiwi = function () {
   //format in DD/MM/YYYY
   const departDate1 = userInput.depart;
   let departFormat = departDate1.split("-")
-  departDate.push(departFormat[1] + '/' + departFormat[2] + '/' + departFormat[0])
+  departDate.push(departFormat[2] + '/' + departFormat[1] + '/' + departFormat[0])
     
   
   let returnDate1 = userInput.return;
   let returnFormat = returnDate1.split("-")
-  returnDate.push(returnFormat[1] + '/' + returnFormat[2] + '/' + returnFormat[0])
+  returnDate.push(returnFormat[2] + '/' + returnFormat[1] + '/' + returnFormat[0])
     
 
   // console.log(departDate);
@@ -112,32 +112,34 @@ const axiosKiwi = function () {
   let limit = "10";
   let active_only = "true";
   let sort = "price";
-
+  let depArray = []
   // Make a request from departure flight Kiwi
-  axios.get(`https://api.skypicker.com/flights?flyFrom=${startLocal}&to=${endLocali}&dateFrom=${departDate}&dateTo=${returnDate}&partner=picky/locations?term=${term}&locale=${locale}&location_types=${location_types}&limit=${limit}&active_only=${active_only}&sort=${sort}&curr=USD`)
+  for (i = 0; i < endLocal.length; i++){
+    console.log("inside the kiwi axios call for loop")
+  axios.get(`https://api.skypicker.com/flights?flyFrom=${startLocal}&to=${endLocal[i]}&dateFrom=${departDate}&dateTo=${returnDate}&partner=picky/locations?term=${term}&locale=${locale}&location_types=${location_types}&limit=${limit}&active_only=${active_only}&sort=${sort}&curr=USD`)
 
 
-    .then(function (response) {
+    .then(function(depSearch) {
 
-      let resArray = []
-
-      // console.log(response.data.data[].price)
+      // console.log(response.data.data[0].price)
       for (let i = 0; i < 10; i++) {
-        resArray.push(response.data.data[i].price)
+        depArray.push(depSearch.data.data[i].price)
       }
-      resArray.sort(function (a, b) { return a - b })
+      depArray.sort(function (a, b) { return a - b })
 
-      // console.log(resArray);
+      console.log('******INSIDE THE FOR LOOP DEP ARRAY', depArray);
     })
     .catch(function (error) {
       // handle error
-      // console.log(error);
+      console.log(error);
     })
-    .finally(function (SearchResults) {
-      // response.JSON.stringify(SearchResults)
-    });
-
-
+    // .finally(function (depSearchResults) {
+    //   depSearch.JSON.stringify(depSearchResults)
+    //   console.log(depSearchResults)
+      // return(depSearchResults)
+    // });
+  };
+console.log('***********OUTSIDE THE FOR LOOP DEP ARRAY', depArray);
 
   // Make a request from Kiwi
   axios.get(`https://api.skypicker.com/flights?flyFrom=${endLocal}&to=${startLocal}&dateFrom=${departDate}&dateTo=${returnDate}&partner=picky/locations?term=${term}&locale=${locale}&location_types=${location_types}&limit=${limit}&active_only=${active_only}&sort=${sort}&curr=USD`)
