@@ -13,6 +13,13 @@
     color: #3a878f;
 }
 
+.fontbold{
+    font-family: din-2014, sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    color: #3a878f;
+}
+
 .twentypxfont{
     font-size: 20px 
 }
@@ -30,4 +37,8 @@
 
 .focus :focus {
     outline: none !important;
+}
+
+.floatright{
+    float: right;
 }

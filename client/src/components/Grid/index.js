@@ -3,7 +3,7 @@ import React from "react";
 // Exporting the Container, Row, and Col components from this file
 
 // This Container component allows us to use a bootstrap container without worrying about class names
-export function Container({ fluid, children, maxwidth }) {
+export function Container({ fluid, children, maxwidth, padding }) {
   
   var x = {
     maxWidth : maxwidth,
@@ -11,7 +11,7 @@ export function Container({ fluid, children, maxwidth }) {
     borderWidth: "10px",
     borderColor: "#3a878f",
     borderStyle: "Solid", 
-    padding: "20px",
+    padding: padding,
     background: "rgba(255, 255, 255, 0.9)",
     borderRadius: "30px",
     marginBottom: "25px",
