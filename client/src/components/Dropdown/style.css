@@ -1,0 +1,21 @@
+.dropdown{
+    position: absolute;
+    display: none;
+    border-width: 2px;
+    border-color: #3a878f;
+    border-style: solid;
+    border-radius: 10px;
+}
+
+.dropdownparent:hover .dropdown{
+    display: block;
+}
+
+.dropdownparent:hover{
+    cursor: pointer;
+}
+
+li{
+    list-style-type: none;
+}
+
