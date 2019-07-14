@@ -126,7 +126,8 @@ const axiosKiwi = function () {
             airlineIATA: flight.route[0].airline,
             departureTime: flight.dTime,
             flightTime: flight.fly_duration,
-            arrivalTime: flight.aTime
+            arrivalTime: flight.aTime,
+            bookingLink: flight.deep_link
             // ,stops: connections[0]
           }
         }))
@@ -134,7 +135,7 @@ const axiosKiwi = function () {
           depSearchObj.flights = mappedFlights
           // console.log(depSearchObj);
           depArray = Array.from(Object.keys(depSearchObj), k=>[`${k}`, depSearchObj[k]]);
-          // console.log(depArray[0], depArray[1], depArray[2])
+          console.log(depArray[0], depArray[1], depArray[2])
           res.json(depArray)
         })
         .catch(function (error) {
