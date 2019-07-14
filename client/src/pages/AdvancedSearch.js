@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import API from "../utils/API";
 import { Col, Row, Container } from "../components/Grid";
 import { Input, FormBtn, Date } from "../components/Form";
@@ -23,13 +24,42 @@ class AdvancedSearch extends Component {
     Ski: "0",
     Quiet: "0",
     KidFriendly: "0",
-    level: "",
+    SelectedTags: [],
+    level: ""
   };
 
   showState = event => {
     event.preventDefault(
       console.log(this.state)
     )
+  }
+
+  componentDidMount(){
+    this.pullfromlocalstorage()
+  }
+
+  pullfromlocalstorage () {
+    if (localStorage.getItem("from") === null){
+      console.log ("We did it?")
+    }
+    else {
+      this.setState({
+        from: localStorage.getItem("from"),
+        depart: localStorage.getItem("depart"),
+        returnn: localStorage.getItem("returnn"),
+        budget: localStorage.getItem("budget"),
+        Beach: localStorage.getItem("Beach"),
+        Urban: localStorage.getItem("Urban"),
+        Hiking: localStorage.getItem("Hiking"),
+        Food: localStorage.getItem("Food"),
+        Nightlife: localStorage.getItem("Nightlife"),
+        Historic: localStorage.getItem("Historic"),
+        Ski: localStorage.getItem("Ski"),
+        Quiet: localStorage.getItem("Quiet"),
+        KidFriendly: localStorage.getItem("KidFriendly"),
+        level: localStorage.getItem("level"),
+      })
+    }
   }
 
   handleTag = event => {
@@ -66,13 +96,35 @@ class AdvancedSearch extends Component {
     });
   };
 
+  createSelTags = () => {
+    const values = Object.values(this.state)
+    const keys = Object.keys(this.state)
+    console.log("values:" + values)
+    console.log("keys" + keys)
+    for (var i = 0; i < values.length; i++) {
+      if (values[i] === "1") {
+        this.state.SelectedTags.push(keys[i])
+      }
+    }
+
+  }
+
   handleFormSubmit = event => {
     event.preventDefault();
+    const values = Object.values(this.state)
+    const keys = Object.keys(this.state)
+    console.log("values:" + values)
+    console.log("keys" + keys)
+    for (var i = 0; i < values.length; i++) {
+      if (values[i] === "1") {
+        this.state.SelectedTags.push(keys[i])
+      }
+    }
     if (this.state.from && this.state.depart) {
       API.saveTrip({
         from: this.state.from,
         depart: this.state.depart,
-        return: this.state.return,
+        returnn: this.state.returnn,
         budget: this.state.budget,
         Beach: this.state.Beach,
         Urban: this.state.Urban,
@@ -84,17 +136,31 @@ class AdvancedSearch extends Component {
         Quiet: this.state.Quiet,
         KidFriendly: this.state.KidFriendly,
         level: this.state.level
-      })
-        // .then(res => this.loadBooks())
-        .catch(err => console.log(err));
+      }).catch(err => console.log(err));
     }
+    localStorage.clear();
+    localStorage.setItem("from" , this.state.from,);
+    localStorage.setItem("depart" , this.state.depart,);
+    localStorage.setItem("returnn" , this.state.returnn,);
+    localStorage.setItem("budget" , this.state.budget,);
+    localStorage.setItem("Beach" , this.state.Beach,);
+    localStorage.setItem("Urban" , this.state.Urban,);
+    localStorage.setItem("Hiking" , this.state.Hiking,);
+    localStorage.setItem("Food" , this.state.Food,);
+    localStorage.setItem("Nightlife" , this.state.Nightlife,);
+    localStorage.setItem("Historic" , this.state.Historic,);
+    localStorage.setItem("Ski" , this.state.Ski,);
+    localStorage.setItem("Quiet" , this.state.Quiet,);
+    localStorage.setItem("KidFriendly" , this.state.KidFriendly);
+    localStorage.setItem("SelectedTags", this.state.SelectedTags);
+    localStorage.setItem("level" , this.state.level,);
   };
 
   render() {
     return (
       <div>
         <BackgroundImage src={"/images/AdvancedSearchBG.png"}></BackgroundImage>
-        <Container fluid maxwidth={"1000px"}>
+        <Container maxwidth={"1000px"} padding={"20px"}>
           <Row>
             <Col size="12 md-6">
               <form>
@@ -119,9 +185,9 @@ class AdvancedSearch extends Component {
                   <Col size="6">
                     <div className="font twentypxfont">End Date:</div>
                     <Date
-                      value={this.state.return}
+                      value={this.state.returnn}
                       onChange={this.handleInputChange}
-                      name="return"
+                      name="returnn"
                       placeholder="date"
                     />
                   </Col>
@@ -140,7 +206,7 @@ class AdvancedSearch extends Component {
                 <div className="font twentypxfont">What type of trip are you looking for?</div>
                 <div>
                   {tags.map(item => (
-                    <button id={item} className={this.state[item] === "0" ? "m-1 py-1 px-2 bg-light radius25px border2px font twentypxfont blueborder pointer focus" : "m-1 py-1 px-2 bg-light radius25px border2px font twentypxfont blueborder pointer focus blue"} value={item} key={item} onClick={this.handleTag}>{item}</button>
+                    <button id={item} className={this.state[item] === "1" ? "m-1 py-1 px-2 bg-light radius25px border2px font twentypxfont blueborder pointer focus blue" : "m-1 py-1 px-2 bg-light radius25px border2px font twentypxfont blueborder pointer focus"} value={item} key={item} onClick={this.handleTag}>{item}</button>
                   ))}
                 </div>
                 <div className="font twentypxfont">What are your standards?</div>
@@ -149,12 +215,13 @@ class AdvancedSearch extends Component {
                     <button className={this.state.level === item ? "m-1 py-1 px-2 bg-light radius25px border2px font twentypxfont blueborder pointer focus blue" : "m-1 py-1 px-2 bg-light radius25px border2px font twentypxfont blueborder pointer focus"} value={item} key={item} onClick={this.handleLevel}>{item}</button>
                   ))}
                 </div>
+                
                 <FormBtn
                   onClick={this.handleFormSubmit}
                 >
-                  GO
+                 <Link to="/Results">SEARCH</Link>
                 </FormBtn>
-                {/* <button onClick={this.showState}>show state</button> */}
+                <button onClick={this.showState}>show state</button>
               </form>
             </Col>
           </Row>
