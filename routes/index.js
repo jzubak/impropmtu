@@ -7,7 +7,9 @@ const apiRoutes = require("./api");
 const db = require("../models");
 const Op = Sequalize.Op;
 
-let qRes = [];
+let queryResults = [];
+let clientReturnArray = [];
+let clientDepartureArray = [];
 
 // API Routes
 router.use("/api", apiRoutes);
@@ -45,45 +47,35 @@ router.route('/api/search').post(function (req, res) {
       let destFiltered = destinationFilter
       return destFiltered
     }).then(function (endQ, res) {
-      // console.log(initialres, endQ)
-      // console.log(req.body)
       let userIn = req.body
       // res.json({data:{userInput: req.body, airportsArray: initialres, destinationsArray: endQ}})
-      qRes.push({ userInput: userIn }, { airArray: initialres }, { destArray: endQ })
-
+      queryResults.push({ userInput: userIn }, { airArray: initialres }, { destArray: endQ })
       // console.log(qRes)
     }).then(function (callkiwi) {
       //  console.log("this is the qRes data", qRes)
-      axiosKiwi(callkiwi);
+      axiosKiwi(res);
+      // return qRes
     })
       .catch(function (err) {
         console.log(err);
-        res.json(err);
+        // res.json(err);
       })
   })
 });
 
-
-router.route("/Results").post(function (req, res) {
-  db.SearchResults.create(req.body).then(function (searchPost) {
-    console.log("this is the results post");
-    console.log(req.body)
-    res.json(searchPost)
-  })
-})
 // If no API routes are hit, send the React app
 router.use(function (req, res) {
   res.sendFile(path.join(__dirname, "../client/build/index.html"));
 });
 
 //this is the kiwi api search
-const axiosKiwi = function () {
-  const userInput = qRes[0].userInput;
+async function axiosKiwi(searchRes) {
+  const userInput = queryResults[0].userInput;
   let startLocal = userInput.from;
   let endLocal = [];
   let departDate = [];
   let returnDate = [];
-  const airports = qRes[1].airArray;
+  const airports = queryResults[1].airArray;
   airports.forEach(element => {
     endLocal.push(element.code)
   });
@@ -93,7 +85,7 @@ const axiosKiwi = function () {
   let departFormat = departDate1.split("-")
   departDate.push(departFormat[2] + '/' + departFormat[1] + '/' + departFormat[0])
 
-  let returnDate1 = userInput.return;
+  let returnDate1 = userInput.returnn;
   let returnFormat = returnDate1.split("-")
   returnDate.push(returnFormat[2] + '/' + returnFormat[1] + '/' + returnFormat[0])
 
@@ -103,79 +95,108 @@ const axiosKiwi = function () {
   let term = startLocal;
   let locale = "USD";
   let location_types = "airport";
-  let limit = "10";
+  let limit = "2";
   let active_only = "true";
   let sort = "price";
   let depArray = [];
   let retArray = [];
 
-  // Make a request for departure flight Kiwi
+  //Promise.all version of depSearch
+  const departureSearchURLs = []
   for (let i = 0; i < endLocal.length; i++) {
     let currentEndLocal = endLocal[i]
     let depSearchObj = {
       startingIATA: startLocal,
       destinationIATA: currentEndLocal,
       flights: []
+    }
+    departureSearchURLs.push(`https://api.skypicker.com/flights?flyFrom=${startLocal}&to=${endLocal[i]}&dateFrom=${departDate}&dateTo=${returnDate}&partner=picky/locations?term=${term}&locale=${locale}&location_types=${location_types}&limit=${limit}&active_only=${active_only}&sort=${sort}&curr=USD`)
+  }
+  // console.log("**** this is the promise.all start***", departureSearchURLs);
+  const depPromises = departureSearchURLs.map(async (departureSearchURL, idx) => {
+    // console.log(`received departure search ${idx+1}:`) 
+    return await axios.get(departureSearchURL)
+  });
+  const depResponses = await Promise.all(depPromises);
+  // console.log("FINITE!", responses);
+  const departureSearchObjs = depResponses.map((resp, departureResponseIndex) => {
+    const depSearchObj = {
+      startingIATA: startLocal,
+      destinationIATA: endLocal[departureResponseIndex],
+      flights: []
+    }
+    const mappedFlights = resp.data.data.map(((flight, mappedFlightIndex) => {
+      // console.log(flight.route)
+      return {
+        prices: flight.price,
+        airlineIATA: flight.route[0].airline,
+        departureTime: flight.dTime,
+        flightTime: flight.fly_duration,
+        arrivalTime: flight.aTime,
+        // bookingLink: flight.deep_link
+        // ,stops: connections[0]
       }
-    axios.get(`https://api.skypicker.com/flights?flyFrom=${startLocal}&to=${endLocal[i]}&dateFrom=${departDate}&dateTo=${returnDate}&partner=picky/locations?term=${term}&locale=${locale}&location_types=${location_types}&limit=${limit}&active_only=${active_only}&sort=${sort}&curr=USD`)
-      .then(function (depSearch) {
-        const mappedFlights = depSearch.data.data.map(((flight, index) => {
-          // console.log(flight.route)
-          return {
-            prices: flight.price,
-            airlineIATA: flight.route[0].airline,
-            departureTime: flight.dTime,
-            flightTime: flight.fly_duration,
-            arrivalTime: flight.aTime
-            // ,stops: connections[0]
-          }
-        }))
-          // console.log(mappedFlights[1]);
-          depSearchObj.flights = mappedFlights
-          // console.log(depSearchObj);
-          depArray = Array.from(Object.keys(depSearchObj), k=>[`${k}`, depSearchObj[k]]);
-          // console.log(depArray[0], depArray[1], depArray[2])
-          res.json(depArray)
-        })
-        .catch(function (error) {
-          res.json(error)
-          console.log(error);
-        });
-      };
+    }))
+    depSearchObj.flights = mappedFlights
+    // console.log(depSearchObj);
+    depArray = Array.from(Object.keys(depSearchObj), k => [`${k}`, depSearchObj[k]]);
+    clientDepartureArray.push(depArray);
+    return depSearchObj
+  })
+  
+  // console.log('***departureSearchObjs***', departureSearchObjs, departureSearchObjs[0].flights[0])
 
-    // Make a return flight request from Kiwi
-    for (i = 0; i < endLocal.length; i++) {
-      let currentEndLocal = endLocal[i]
-      let retSearchObj = {
-        startingIATA: startLocal,
-        destinationIATA: currentEndLocal,
-        flights: []
-        }
-      axios.get(`https://api.skypicker.com/flights?flyFrom=${endLocal}&to=${startLocal}&dateFrom=${departDate}&dateTo=${returnDate}&partner=picky/locations?term=${term}&locale=${locale}&location_types=${location_types}&limit=${limit}&active_only=${active_only}&sort=${sort}&curr=USD`)
-        .then(function (retSearch) {
-          const retMappedFlights = retSearch.data.data.map(((flight, index) => {
-            // console.log(flight.route)
-            return {
-              prices: flight.price,
-              airlineIATA: flight.route[0].airline,
-              departureTime: flight.dTime,
-              flightTime: flight.fly_duration,
-              arrivalTime: flight.aTime
-              // ,stops: connections[0]
-            }
-          }))
-            // console.log(retMappedFlights[1]);
-            retSearchObj.flights = retMappedFlights
-            retArray = Array.from(Object.keys(retSearchObj), k=>[`${k}`, retSearchObj[k]]);
-          console.log(retArray[0], retArray[1], retArray[2])
-          // res.json(retArray)
-          })
-          .catch(function (error) {
-            // res.json(error)
-            console.log(error);
-          });
-        };
-  };
+  // Make a return flight Promise.all request from Kiwi
+  const returnSearchURLs = []
+  for (let i = 0; i < endLocal.length; i++) {
+    let currentEndLocal = endLocal[i]
+    let retSearchObj = {
+      startingIATA: startLocal,
+      destinationIATA: currentEndLocal,
+      flights: []
+    }
+    returnSearchURLs.push(`https://api.skypicker.com/flights?flyFrom=${startLocal}&to=${endLocal[i]}&dateFrom=${departDate}&dateTo=${returnDate}&partner=picky/locations?term=${term}&locale=${locale}&location_types=${location_types}&limit=${limit}&active_only=${active_only}&sort=${sort}&curr=USD`)
+  }
+  // console.log("**** this is the promise.all start***", returnSearchURLs);
+  const retPromises = returnSearchURLs.map(async (returnSearchURL, idx) => {
+    // console.log(`received departure search ${idx+1}:`) 
+    return await axios.get(returnSearchURL)
+  });
+  const retResponses = await Promise.all(retPromises);
+  // console.log("FINITE!", responses);
+  const returnSearchObjs = retResponses.map((resp, returnResponseIndex) => {
+    const retSearchObj = {
+      startingIATA: startLocal,
+      destinationIATA: endLocal[returnResponseIndex],
+      flights: []
+    }
+    const retMappedFlights = resp.data.data.map(((flight, mappedFlightIndex) => {
+      // console.log(flight.route)
+      return {
+        prices: flight.price,
+        airlineIATA: flight.route[0].airline,
+        departureTime: flight.dTime,
+        flightTime: flight.fly_duration,
+        arrivalTime: flight.aTime,
+        // bookingLink: flight.deep_link
+        // ,stops: connections[0]
+      }
+    }))
+    retSearchObj.flights = retMappedFlights
+    // console.log(depSearchObj);
+    retArray = Array.from(Object.keys(retSearchObj), k => [`${k}`, retSearchObj[k]]);
+    clientReturnArray.push(retArray);
+    return retSearchObj
+  })
+
+  //concat the dep and return SearchObjects
+  const completedKiwi = Object.assign({departures: departureSearchObjs},{returns: returnSearchObjs})
+  searchRes.json(completedKiwi)
+};
+console.log("clientDepartureArray:", clientDepartureArray);
+console.log("clientReturnArray:", clientReturnArray);
+
+
 
 
 module.exports = router;

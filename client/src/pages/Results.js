@@ -31,6 +31,8 @@ class Results extends Component {
 
   componentDidMount() {
     this.pullfromlocalstorage()
+    this.loadTrips()
+    console.log(this.state)
   }
 
   pullfromlocalstorage() {
