@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const tripsController = require("../../controllers/tripsController");
 
-// // Matches with "/api/trips"
+//Matches with "/api/trips"
 router.route("/")
   .get(tripsController.findAll);
   // .post(tripsController.findAll);
