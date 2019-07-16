@@ -42,3 +42,11 @@
 .floatright{
     float: right;
 }
+
+.display{
+    display:block;
+}
+
+.nodisplay{
+    display:none;
+}

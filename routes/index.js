@@ -146,30 +146,30 @@ async function axiosKiwi(searchRes) {
   
   // console.log('***departureSearchObjs***', departureSearchObjs, departureSearchObjs[0].flights[0])
 
-  // Make a return flight Promise.all request from Kiwi
-  const returnSearchURLs = []
-  for (let i = 0; i < endLocal.length; i++) {
-    let currentEndLocal = endLocal[i]
-    let retSearchObj = {
-      startingIATA: startLocal,
-      destinationIATA: currentEndLocal,
-      flights: []
+    // Make a return flight Promise.all request from Kiwi
+    const returnSearchURLs = []
+    for (let i = 0; i < endLocal.length; i++) {
+      let currentEndLocal = endLocal[i]
+      let retSearchObj = {
+        startingIATA: currentEndLocal,
+        destinationIATA: startLocal,
+        flights: []
+      }
+      returnSearchURLs.push(`https://api.skypicker.com/flights?flyFrom=${endLocal[i]}&to=${startLocal}&dateFrom=${departDate}&dateTo=${returnDate}&partner=picky/locations?term=${term}&locale=${locale}&location_types=${location_types}&limit=${limit}&active_only=${active_only}&sort=${sort}&curr=USD`)
     }
-    returnSearchURLs.push(`https://api.skypicker.com/flights?flyFrom=${startLocal}&to=${endLocal[i]}&dateFrom=${departDate}&dateTo=${returnDate}&partner=picky/locations?term=${term}&locale=${locale}&location_types=${location_types}&limit=${limit}&active_only=${active_only}&sort=${sort}&curr=USD`)
-  }
-  // console.log("**** this is the promise.all start***", returnSearchURLs);
-  const retPromises = returnSearchURLs.map(async (returnSearchURL, idx) => {
-    // console.log(`received departure search ${idx+1}:`) 
-    return await axios.get(returnSearchURL)
-  });
-  const retResponses = await Promise.all(retPromises);
-  // console.log("FINITE!", responses);
-  const returnSearchObjs = retResponses.map((resp, returnResponseIndex) => {
-    const retSearchObj = {
-      startingIATA: startLocal,
-      destinationIATA: endLocal[returnResponseIndex],
-      flights: []
-    }
+    // console.log("**** this is the promise.all start***", returnSearchURLs);
+    const retPromises = returnSearchURLs.map(async (returnSearchURL, idx) => {
+      // console.log(`received departure search ${idx+1}:`) 
+      return await axios.get(returnSearchURL)
+    });
+    const retResponses = await Promise.all(retPromises);
+    // console.log("FINITE!", responses);
+    const returnSearchObjs = retResponses.map((resp, returnResponseIndex) => {
+      const retSearchObj = {
+        startingIATA: endLocal[returnResponseIndex],
+        destinationIATA: startLocal,
+        flights: []
+      }
     const retMappedFlights = resp.data.data.map(((flight, mappedFlightIndex) => {
       // console.log(flight.route)
       return {

@@ -8,19 +8,19 @@ function Parameters({from, depart, returnn, budget, tags, level}) {
     <div className="row font">
       <div className="col-12 col-md-3">
         <div className="fontbold">From </div>
-        <div> {from}</div>
+        <div> {from} </div>
       </div>
       <div className="col-12 col-md-3">
         <div className="fontbold">Dates </div>
-        <div> {depart}-{returnn}</div>
+        <div> {depart} - {returnn}</div>
       </div>
       <div className="col-4 col-md-2">
         <div className="fontbold">Budget </div>
-        <div> {budget}</div>
+        <div> ${budget}</div>
       </div>
       <div className="col-4 col-md-2">
         <div className="fontbold">Tags </div>
-      <Dropdown tags={tags} />
+      <Dropdown tags2={tags} />
       </div>
       <div className="col-4 col-md-2">
         <div className="fontbold">Class </div>

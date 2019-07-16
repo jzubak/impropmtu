@@ -4,7 +4,9 @@ import API from "../utils/API";
 import { Col, Row, Container } from "../components/Grid";
 import { Input, FormBtn, Date } from "../components/Form";
 import BackgroundImage from "../components/BackgroundImage"
+// import AutoCompleteButton from "../components/AutoCompleteButton"
 import "./Style.css";
+import axios from "axios";
 
 const tags = ["Beach", "Urban", "Hiking", "Food", "Nightlife", "Historic", "Ski", "Quiet", "KidFriendly"];
 const level = ["0-1 stars", "2-3 stars", "4-5 stars"]
@@ -12,6 +14,8 @@ const level = ["0-1 stars", "2-3 stars", "4-5 stars"]
 class AdvancedSearch extends Component {
   state = {
     from: "",
+    fromcity: "",
+    autoCompleteClicked: false,
     depart: "",
     returnn: "",
     budget: "",
@@ -24,8 +28,10 @@ class AdvancedSearch extends Component {
     Ski: "0",
     Quiet: "0",
     KidFriendly: "0",
-    SelectedTags: [],
-    level: ""
+    selectedTags: [],
+    level: "",
+    city1: [],
+    code1: [],
   };
 
   showState = event => {
@@ -45,6 +51,7 @@ class AdvancedSearch extends Component {
     else {
       this.setState({
         from: localStorage.getItem("from"),
+        fromcity: localStorage.getItem("fromcity"),
         depart: localStorage.getItem("depart"),
         returnn: localStorage.getItem("returnn"),
         budget: localStorage.getItem("budget"),
@@ -89,25 +96,53 @@ class AdvancedSearch extends Component {
     // console.log(this.state)
   }
 
-  handleInputChange = event => {
+  handleInputChangeFrom = event => {
+    const { value } = event.target;
+    this.setState({
+      fromcity: value,
+      autoCompleteClicked: false
+    });
+    this.airportCoder(value)
+  };
+
+  handleInputChange= event => {
     const { name, value } = event.target;
     this.setState({
       [name]: value
     });
   };
 
-  createSelTags = () => {
-    const values = Object.values(this.state)
-    const keys = Object.keys(this.state)
-    console.log("values:" + values)
-    console.log("keys" + keys)
-    for (var i = 0; i < values.length; i++) {
-      if (values[i] === "1") {
-        this.state.SelectedTags.push(keys[i])
-      }
-    }
-
+  handleAutoComplete = event => {
+    event.preventDefault()
+    const { value , name } = event.target;
+    this.setState({
+      from: value,
+      fromcity: name,
+      autoCompleteClicked: true 
+    })
   }
+
+  airportCoder = (userCityInput) => {
+  axios.get(`http://aviation-edge.com/v2/public/autocomplete?key=98ea47-bcf82a&city=${userCityInput}`)
+  .then((response) => {
+    console.log(response.data)
+    let citiesarray = []
+    let codearray = []
+    for (var i = 0; i < response.data.cities.length; i++) {
+      citiesarray.push( response.data.cities[i].nameCity + ', ' + response.data.cities[i].codeIso2Country + ' (' + response.data.cities[i].codeIataCity + ")" )
+      codearray.push(response.data.cities[i].codeIataCity)
+    }
+    console.log(citiesarray)
+    this.setState({
+      city1 : citiesarray,
+      code1 : codearray,
+    })
+  })
+  .catch(function (error) {
+    // handle error
+    console.log(error);
+  })
+}
 
   handleFormSubmit = event => {
     event.preventDefault();
@@ -117,7 +152,7 @@ class AdvancedSearch extends Component {
     console.log("keys" + keys)
     for (var i = 0; i < values.length; i++) {
       if (values[i] === "1") {
-        this.state.SelectedTags.push(keys[i])
+        this.state.selectedTags.push(keys[i])
       }
     }
     if (this.state.from && this.state.depart) {
@@ -136,10 +171,19 @@ class AdvancedSearch extends Component {
         Quiet: this.state.Quiet,
         KidFriendly: this.state.KidFriendly,
         level: this.state.level
-      }).catch(err => console.log(err));
+      }).then(kiwi => {
+        // let kiwidata = kiwi.data
+        console.log(kiwi)
+        console.log(this.props.handleInfo)
+        this.props.handleInfo(kiwi)
+        // localStorage.setItem('kiwi', JSON.stringify(kiwi.data))
+
+      })
+      .catch(err => console.log(err));
     }
     localStorage.clear();
-    localStorage.setItem("from" , this.state.from,);
+    localStorage.setItem("fromcity" , this.state.fromcity,);
+    localStorage.setItem("from", this.state.from,);
     localStorage.setItem("depart" , this.state.depart,);
     localStorage.setItem("returnn" , this.state.returnn,);
     localStorage.setItem("budget" , this.state.budget,);
@@ -151,9 +195,10 @@ class AdvancedSearch extends Component {
     localStorage.setItem("Historic" , this.state.Historic,);
     localStorage.setItem("Ski" , this.state.Ski,);
     localStorage.setItem("Quiet" , this.state.Quiet,);
-    localStorage.setItem("KidFriendly" , this.state.KidFriendly);
-    localStorage.setItem("SelectedTags", this.state.SelectedTags);
+    localStorage.setItem("KidFriendly" , this.state.KidFriendly,);
+    localStorage.setItem("selectedTags", this.state.selectedTags,);
     localStorage.setItem("level" , this.state.level,);
+
   };
 
   render() {
@@ -166,11 +211,24 @@ class AdvancedSearch extends Component {
               <form>
                 <div className="font twentypxfont">From:</div>
                 <Input
-                  value={this.state.from}
-                  onChange={this.handleInputChange}
-                  name="from"
+                  value={this.state.fromcity}
+                  onChange={this.handleInputChangeFrom}
+                  name="fromcity"
                   placeholder="Where do you want to start?"
                 />
+
+{/* sentences.map((text, index) => {
+    const image = images[index];
+    return (<Component icon={image} text={text} />);
+}); */}
+
+                <div>
+                  {this.state.city1.map((item,index) => {
+                    const code = this.state.code1[index];
+                      return(
+                      <button className={this.state.autoCompleteClicked === false ? "display" : "nodisplay"} key={item} value={code} name={item} onClick={this.handleAutoComplete}>{item}</button>)
+                  })}
+                </div>
                 <Row>
                   <Col size="6">
                     <div className="font twentypxfont">Start Date:</div>
@@ -178,8 +236,7 @@ class AdvancedSearch extends Component {
                       value={this.state.depart}
                       onChange={this.handleInputChange}
                       name="depart"
-                      placeholder="date"
-                      
+                      placeholder="date" 
                     />
                   </Col>
                   <Col size="6">

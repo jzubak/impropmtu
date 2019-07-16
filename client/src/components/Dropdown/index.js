@@ -1,14 +1,14 @@
 import React from "react";
 import "./style.css"
 
-function Dropdown(props){
-    
+function Dropdown({tags2}){
+    console.log("Tags2:", tags2)
 return(
 
     <div className="dropdownparent">
     <div className="font"> Show Tags ▼</div>
     <ul className="dropdown font bg-white pl-1 ml-0 pr-5">
-        {props.tags.map(item => (
+        {tags2.map(item => (
         
             <li key={item}>
                 {item}
