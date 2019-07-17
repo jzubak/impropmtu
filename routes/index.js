@@ -133,7 +133,7 @@ async function axiosKiwi(searchRes) {
         departureTime: flight.dTime,
         flightTime: flight.fly_duration,
         arrivalTime: flight.aTime,
-        // bookingLink: flight.deep_link
+        bookingLink: `www.kiwi.com/deep?affilid=test&from=${startLocal}&to=${endLocal[mappedFlightIndex]}&departure=${returnDate}`
         // ,stops: connections[0]
       }
     }))
@@ -178,7 +178,7 @@ async function axiosKiwi(searchRes) {
         departureTime: flight.dTime,
         flightTime: flight.fly_duration,
         arrivalTime: flight.aTime,
-        // bookingLink: flight.deep_link
+        bookingLink: `www.kiwi.com/deep?affilid=test&from=${endLocal[mappedFlightIndex]}&to=${startLocal}&departure=${returnDate}`
         // ,stops: connections[0]
       }
     }))

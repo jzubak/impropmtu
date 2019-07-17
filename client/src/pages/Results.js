@@ -61,11 +61,11 @@ class Results extends Component {
       console.log(this.state),
       console.log(this.props.flightInfo),
       console.log(this.props.flightInfo.departures),
-      console.log(this.props.flightInfo.departures[0]),
-      console.log(this.props.flightInfo.departures[0].destinationIATA),
-      console.log(this.props.flightInfo.departures[0].startingIATA),
-      console.log(this.props.flightInfo.departures[0].flights[0].prices),
-      console.log(this.props.flightInfo.departures[0].flights[0].airlineIATA),
+      console.log(this.props.flightInfo.departures[1]),
+      console.log(this.props.flightInfo.departures[1].destinationIATA),
+      console.log(this.props.flightInfo.departures[1].startingIATA),
+      console.log(this.props.flightInfo.departures[1].flights[1].prices),
+      console.log(this.props.flightInfo.departures[1].flights[1].airlineIATA),
     )
   }
 

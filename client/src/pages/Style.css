@@ -50,3 +50,40 @@
 .nodisplay{
     display:none;
 }
+
+.autoCompleteBox{
+    position: absolute;
+    /* display: none; */
+    z-index: +10;
+    background-color:white;
+    padding: 10px;
+    border-width: 2px;
+    border-color: #3a878f;
+    border-style: solid;
+    border-radius: 10px;
+    width: 94%;
+    max-height: 180px;
+    overflow: scroll;
+}
+
+.autoCompleteText{
+    border-width: 0px;
+    background-color:white;
+    color: #3a878f;
+}
+
+.dollarsign{
+    /* float:left; */
+    background-color:white;
+    height: 38px;
+    width: 4.8%;
+    position: absolute;
+    border: 1px solid #ced4da;
+    padding-top: 5px;
+    padding-left: 7px;
+
+}
+
+.white{
+    color:white;
+}
