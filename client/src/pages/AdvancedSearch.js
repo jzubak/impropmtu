@@ -172,10 +172,10 @@ class AdvancedSearch extends Component {
         KidFriendly: this.state.KidFriendly,
         level: this.state.level
       }).then(kiwi => {
-        // let kiwidata = kiwi.data
-        console.log(kiwi)
+        let kiwidata = kiwi.data
+        console.log(kiwidata)
         console.log(this.props.handleInfo)
-        this.props.handleInfo(kiwi)
+        this.props.handleInfo(kiwidata)
         // localStorage.setItem('kiwi', JSON.stringify(kiwi.data))
 
       })

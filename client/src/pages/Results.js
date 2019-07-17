@@ -2,8 +2,8 @@ import React, { Component } from "react";
 // import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../components/Grid";
 import Parameters from "../components/SearchParameters";
-// import TripBox from "../components/TripBox";
-import API from "../utils/API";
+import TripBox from "../components/TripBox";
+// import API from "../utils/API";
 import BackgroundImage from "../components/BackgroundImage"
 import "./Style.css"
 // import Axios from "axios";
@@ -28,22 +28,13 @@ class Results extends Component {
     KidFriendly: "0",
     selectedTags: [],
     level: "",
-    flights: {}
+    // flights: {}
   };
 
   componentDidMount() {
     this.pullfromlocalstorage()
-    this.setState({
-      flights: this.props.flightInfo
-    }
-    )
-    // Axios.get(AdvancedSearch)
-    //   .then(kiwi=>this.setState({
-    //     data: kiwi
-    //   }))
-    // this.loadTrips()
-    // console.log(this.state)
   }
+
 
   pullfromlocalstorage() {
     this.setState({
@@ -62,38 +53,29 @@ class Results extends Component {
       KidFriendly: localStorage.getItem("KidFriendly"),
       level: localStorage.getItem("level"),
       selectedTags: localStorage.getItem("selectedTags").split(","),
-      // kiwi: JSON.parse(localStorage.getItem('kiwi'))
     });
   }
 
   showState = event => {
     event.preventDefault(
       console.log(this.state),
-      console.log(this.props.flightInfo)
+      console.log(this.props.flightInfo),
+      console.log(this.props.flightInfo.departures),
+      console.log(this.props.flightInfo.departures[0]),
+      console.log(this.props.flightInfo.departures[0].destinationIATA),
+      console.log(this.props.flightInfo.departures[0].startingIATA),
+      console.log(this.props.flightInfo.departures[0].flights[0].prices),
+      console.log(this.props.flightInfo.departures[0].flights[0].airlineIATA),
     )
   }
 
-
-  // createSelTags = () => {
-  //   const values = Object.values(this.state)
-  //   const keys = Object.keys(this.state)
-  //   console.log("values:" + values)
-  //   console.log("keys" + keys)
-  //   for (var i = 0; i < values.length; i++) {
-  //     if (values[i] === "1") {
-  //       this.state.selectedTags.push(keys[i])
-  //     }
-  //   }
-
-  // }
-
-  loadTrips = () => {
-    API.getTrips()
-      .then(res =>
-        this.setState({ Trips: res.data })
-      )
-      .catch(err => console.log(err));
-  };
+  // loadTrips = () => {
+  //   API.getTrips()
+  //     .then(res =>
+  //       this.setState({ Trips: res.data })
+  //     )
+  //     .catch(err => console.log(err));
+  // };
 
   render() {
     return (
@@ -109,23 +91,11 @@ class Results extends Component {
             tags={this.state.selectedTags}
           />
         </Container>
+        {/* I wanna see words here {this.props.flightInfo.departures[0].flights[0].airlineIATA} */}
         <Container>
           <Row>
             <Col size="md-12">
-              I wanna see words here {this.props.flightInfo}
-              {/* {this.state.Trips.map(trip => (
-                <TripBox
-                  key={trip._id}
-                  destination={trip.destination}
-                  img={trip.img}
-                  flight={trip.flight}
-                  flightPrice={trip.flightPrice}
-                  hotelPrice={trip.hotelPrice}
-                  totalPrice={trip.totalPrice}
-                >
-                  <Link to={"/Trips/" + trip._id} > See Details </Link>
-                </TripBox>
-              ))} */}
+              <TripBox flightsInfo={this.props.flightInfo}/>
             </Col>
           </Row>
           {/* <button onClick={this.pullfromlocalstorage}>Run Function</button> */}
