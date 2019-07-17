@@ -1,28 +1,19 @@
 import React from "react";
 
-function Tag(props){
-    return(
-        <div>
-            <div>
-                {props.destination}
-            </div>
-            <div>
-                <img alt="destination" src="{props.img}" />
-            </div>
-            <div>
-                Flight Details: {props.flight}
-            </div>
-            <div>
-                Flight Price: {props.flightPrice}
-            </div>
-            <div>
-                Hotel Price: {props.hotelPrice}
-            </div>
-            <div>
-                Total: {props.totalPrice}
-            </div>
-        </div>
-    )
+function TripBox({ flightsInfo }) {
+    console.log("flightsInfo:")
+    console.log(flightsInfo)
+    console.log(flightsInfo.departures)
+    if (flightsInfo.departures === undefined) {
+        console.log("yay")
+        return null
+    }
+    else {
+        return <div>
+        {flightsInfo.departures[0].flights[0].airlineIATA}
+    </div>;
+        
+    }
 }
 
-export default Tag
+export default TripBox
