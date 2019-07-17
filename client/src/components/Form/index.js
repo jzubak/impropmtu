@@ -9,9 +9,11 @@ export function Input(props) {
     fontFamily: "din-2014, sans-serif",
     fontWeight: "400",
     fontStyle: "normal",
-    color: "#3a878f"
+    color: "#3a878f",
+    width: props.width,
+    float: props.float,
+    borderRadius: props.borderradius,
   }
-
 
   return (
     <div className="form-group">

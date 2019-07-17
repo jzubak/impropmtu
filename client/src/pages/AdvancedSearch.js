@@ -16,6 +16,7 @@ class AdvancedSearch extends Component {
     from: "",
     fromcity: "",
     autoCompleteClicked: false,
+    Box: false,
     depart: "",
     returnn: "",
     budget: "",
@@ -100,7 +101,8 @@ class AdvancedSearch extends Component {
     const { value } = event.target;
     this.setState({
       fromcity: value,
-      autoCompleteClicked: false
+      autoCompleteClicked: false,
+      Box: true,
     });
     this.airportCoder(value)
   };
@@ -118,7 +120,8 @@ class AdvancedSearch extends Component {
     this.setState({
       from: value,
       fromcity: name,
-      autoCompleteClicked: true 
+      autoCompleteClicked: true,
+      Box: false,
     })
   }
 
@@ -215,18 +218,13 @@ class AdvancedSearch extends Component {
                   onChange={this.handleInputChangeFrom}
                   name="fromcity"
                   placeholder="Where do you want to start?"
+                  width={"100%"}
                 />
-
-{/* sentences.map((text, index) => {
-    const image = images[index];
-    return (<Component icon={image} text={text} />);
-}); */}
-
-                <div>
+                <div className={this.state.Box === false ? "nodisplay" : "autoCompleteBox"} >
                   {this.state.city1.map((item,index) => {
                     const code = this.state.code1[index];
                       return(
-                      <button className={this.state.autoCompleteClicked === false ? "display" : "nodisplay"} key={item} value={code} name={item} onClick={this.handleAutoComplete}>{item}</button>)
+                      <button className={this.state.autoCompleteClicked === false ? "display autoCompleteText font" : "nodisplay"} key={item} value={code} name={item} onClick={this.handleAutoComplete}>{item}</button>)
                   })}
                 </div>
                 <Row>
@@ -249,12 +247,16 @@ class AdvancedSearch extends Component {
                     />
                   </Col>
                 </Row>
-                  <div className="font twentypxfont">Budget:</div>  
+                  <div className="font twentypxfont">Budget:</div>
+                  <div className="dollarsign font rounded-left">$</div>
                 <Input
                   value={this.state.budget}
                   onChange={this.handleInputChange}
                   name="budget"
                   placeholder="How much you got to spend?"
+                  width = {"95%"}
+                  float = {"right"}
+                  borderradius = {"0px 5px 5px 0px"}
                 />
               </form>
             </Col>
@@ -276,9 +278,9 @@ class AdvancedSearch extends Component {
                 <FormBtn
                   onClick={this.handleFormSubmit}
                 >
-                 <Link to="/Results">SEARCH</Link>
+                 <Link className="white" to="/Results">SEARCH</Link>
                 </FormBtn>
-                <button onClick={this.showState}>show state</button>
+                {/* <button onClick={this.showState}>show state</button> */}
               </form>
             </Col>
           </Row>

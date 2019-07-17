@@ -27,7 +27,7 @@ function Parameters({from, depart, returnn, budget, tags, level}) {
         <div> {level}</div>
       </div>
       <div className="col-12 col-md-12 mt-3 mr-4">
-        <Link to="/AdvancedSearch"><div className="font floatright">Update Search</div></Link>
+        <Link to="/"><div className="font floatright">Update Search</div></Link>
       </div>
     </div>
   )
