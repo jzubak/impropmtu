@@ -55,6 +55,43 @@ function TripBox({ flightsInfo }) {
 
     // console.log(airlineName)
 
+    function getAirlineNameJanky (iataCode){
+        if (iataCode === "NK"){
+            return "Spirit Airlines"
+        }
+        if (iataCode === "F9"){
+            return "Frontier Airlines"
+        }
+        if (iataCode === "AA"){
+            return "American Airlines"
+        }
+        if (iataCode === "UA"){
+            return "United Airlines"
+        }
+        if (iataCode === "DL"){
+            return "Delta Airlines"
+        }
+        if (iataCode === "G4"){
+            return "Allegiant Airlines"
+        }
+        if (iataCode === "AS"){
+            return "Alaskan Airlines"
+        }
+        if (iataCode === "WN"){
+            return "Southwest Airlines"
+        }
+        if (iataCode === "B6"){
+            return "Jet Blue"
+        }
+        if (iataCode === "HA"){
+            return "Hawaian Airlines"
+        }
+        else {
+            return (iataCode)
+        }
+
+    }
+
     if (flightsInfo.departures === undefined) {
         console.log("yay")
         return null
@@ -82,34 +119,38 @@ function TripBox({ flightsInfo }) {
                                                     <strong className="twentypxfont">{item.flights[0].destinationCity} ({item.destinationIATA}) </strong> for ${item.flights[0].prices + returns.flights[0].prices}
                                                 </div>
                                             </div>
-                                            <div>
-                                                <div className="floatleft mr-4">
-                                                    {item.flights[0].airlineIATA}
+                                            <div className="row">
+                                                <div className="col-2 floatleft mr-4">
+                                                    {getAirlineNameJanky(item.flights[0].airlineIATA)}
                                                 </div>
-                                                <div className="floatleft mr-1">
-                                                    {convertTimestamp(item.flights[0].departureTime)}
+                                                <div className="col-4">
+                                                    <div className="floatleft mr-1">
+                                                        {convertTimestamp(item.flights[0].departureTime)}
+                                                    </div>
+                                                    <div className="floatleft mr-1">
+                                                    <strong> {item.startingIATA} </strong> 
+                                                    </div>
+                                                    <div className="floatleft mr-1 arrow">
+                                                        <img src={Arrow} alt="arrow" className="arrow"></img>
+                                                    </div>
+                                                    <div className="floatleft mr-1">
+                                                    {convertTimestamp(item.flights[0].arrivalTime)}
+                                                    </div>
+                                                    <div className="floatleft mr-4">
+                                                        <strong>{item.destinationIATA}</strong>
+                                                    </div>
                                                 </div>
-                                                <div className="floatleft mr-3">
-                                                   <strong> {item.startingIATA} </strong> 
+                                                <div className="col-2">
+                                                    <div className="floatleft mr-1">
+                                                        ({item.flights[0].flightTime})
+                                                    </div>
+                                                    <div className="floatleft mr-2">
+                                                        <strong>${item.flights[0].prices}</strong>
+                                                    </div>
                                                 </div>
-                                                <div className="floatleft mr-3 arrow">
-                                                    <img src={Arrow} alt="arrow" className="arrow"></img>
-                                                </div>
-                                                <div className="floatleft mr-1">
-                                                {convertTimestamp(item.flights[0].arrivalTime)}
-                                                </div>
-                                                <div className="floatleft mr-4">
-                                                    <strong>{item.destinationIATA}</strong>
-                                                </div>
-                                                <div className="floatleft mr-1">
-                                                    ({item.flights[0].flightTime})
-                                                </div>
-                                                <div className="floatleft mr-2">
-                                                    <strong>${item.flights[0].prices}</strong>
-                                                </div>
-                                                <div className="dropdownparent"> 
+                                                <div className="col-3 dropdownparent"> 
                                                     Show Other Options
-                                                    <div className="dropdown"> 
+                                                    <div className="dropdown2"> 
                                                         <OtherOptions flightsInfo={item.flights}/>
                                                     </div>
                                                 </div>
@@ -118,36 +159,39 @@ function TripBox({ flightsInfo }) {
                                                 </div>
                                             </div>
                                             
-                                            <br />
-                                            <div>
-                                                <div className="floatleft mr-4">
-                                                    {returns.flights[0].airlineIATA}
+                                            <div className="row">
+                                                <div className="col-2 floatleft mr-4">
+                                                    {getAirlineNameJanky(returns.flights[0].airlineIATA)}
                                                 </div>
-                                                <div className="floatleft mr-1">
-                                                    {convertTimestamp(returns.flights[0].departureTime)}
-                                                </div>
-                                                <div className="floatleft mr-3">
-                                                    <strong>{returns.startingIATA}</strong>
-                                                </div>
-                                                <div className="floatleft mr-3 arrow">
-                                                    <img src={Arrow} alt="arrow" className="arrow"></img>
-                                                </div> 
-                                                <div className="floatleft mr-1">
+                                                <div className="col-4">
+                                                    <div className="floatleft mr-1">
+                                                        {convertTimestamp(returns.flights[0].departureTime)}
+                                                    </div>
+                                                    <div className="floatleft mr-21">
+                                                    <strong> {returns.startingIATA} </strong> 
+                                                    </div>
+                                                    <div className="floatleft mr-1 arrow">
+                                                        <img src={Arrow} alt="arrow" className="arrow"></img>
+                                                    </div>
+                                                    <div className="floatleft mr-1">
                                                     {convertTimestamp(returns.flights[0].arrivalTime)}
+                                                    </div>
+                                                    <div className="floatleft mr-4">
+                                                        <strong>{returns.destinationIATA}</strong>
+                                                    </div>
                                                 </div>
-                                                <div className="floatleft mr-4">
-                                                    <strong>{returns.destinationIATA}</strong>
+                                                <div className="col-2">
+                                                    <div className="floatleft mr-1">
+                                                        ({returns.flights[0].flightTime})
+                                                    </div>
+                                                    <div className="floatleft mr-2">
+                                                        <strong>${returns.flights[0].prices}</strong>
+                                                    </div>
                                                 </div>
-                                                <div className="floatleft mr-2">
-                                                    ({returns.flights[0].flightTime})
-                                            </div>
-                                                <div className="floatleft mr-1">
-                                                    <strong>${returns.flights[0].prices}</strong>
-                                                </div>
-                                                <div className="dropdownparent"> 
+                                                <div className="col-3 dropdownparent"> 
                                                     Show Other Options
-                                                    <div className="dropdown"> 
-                                                        <OtherOptions flightsInfo={item.flights}/>
+                                                    <div className="dropdown2"> 
+                                                        <OtherOptions flightsInfo={returns.flights}/>
                                                     </div>
                                                 </div>
                                                 <div className="floatright">

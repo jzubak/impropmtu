@@ -176,11 +176,7 @@ class AdvancedSearch extends Component {
         level: this.state.level
       }).then(kiwi => {
         let kiwidata = kiwi.data
-        console.log(kiwidata)
-        console.log(this.props.handleInfo)
         this.props.handleInfo(kiwidata)
-        // localStorage.setItem('kiwi', JSON.stringify(kiwi.data))
-
       })
       .catch(err => console.log(err));
     }
