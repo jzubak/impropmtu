@@ -1,6 +1,10 @@
 import React from "react";
-import axios from "axios";
-
+import { Container, Row, Col } from "../Grid";
+import BookButton from "../BookButton"
+import OtherOptions from "../OtherOptions"
+import Arrow from "../../images/Arrow.png"
+import "./style.css"
+// import axios from "axios";
 
 function TripBox({ flightsInfo }) {
     console.log("flightsInfo:")
@@ -17,8 +21,8 @@ function TripBox({ flightsInfo }) {
             min = ('0' + d.getMinutes()).slice(-2),     // Add leading 0.
             ampm = 'am',
             time;
-      
-            console.log(mm + '-' + dd + '-' + yyyy + ', ' + h + ':' + min + ' ' + ampm);
+
+        console.log(mm + '-' + dd + '-' + yyyy + ', ' + h + ':' + min + ' ' + ampm);
 
         if (hh > 12) {
             h = hh - 12;
@@ -29,59 +33,137 @@ function TripBox({ flightsInfo }) {
         } else if (hh === 0) {
             h = 12;
         }
-      
-        // ie: 2014-03-24, 3:00 PM
-        time =  h + ':' + min + ' ' + ampm;
-        return time;
-      }
-      
-    let airlineName = []
 
-    function getAirlineName (iataCode){
-          axios.get(`https://aviation-edge.com/v2/public/airlineDatabase?key=98ea47-bcf82a&codeIataAirline=${iataCode}`)
-            .then((response) => {
-                console.log(response)
-                airlineName.push(response.data[0].nameAirline)
-                console.log(airlineName)
-                
-            })
+        // ie: 2014-03-24, 3:00 PM
+        time = h + ':' + min + ' ' + ampm;
+        return time;
     }
 
-    console.log(airlineName)
+    // let airlineName = []
+    // let airlineName = ""
+
+    // function getAirlineName (iataCode) {
+    //       axios.get(`https://aviation-edge.com/v2/public/airlineDatabase?key=98ea47-bcf82a&codeIataAirline=${iataCode}`)
+    //         .then((response) => {
+    //             console.log(iataCode)
+    //             console.log("response" , response)
+    //             airlineName = response.data[0].nameAirline
+    //             console.log(airlineName)
+    //             return airlineName  
+    //         })
+    // }
+
+    // console.log(airlineName)
 
     if (flightsInfo.departures === undefined) {
         console.log("yay")
         return null
     }
     else {
-        console.log("x:" , getAirlineName(flightsInfo.departures[0].flights[0].airlineIATA))
         return (
             <div>
-                {flightsInfo.departures.map((item,index) => {
+                {flightsInfo.departures.map((item, index) => {
                     const returns = flightsInfo.returns[index];
-                    const airlines = airlineName[index];
-                    console.log("item", item)
-                    console.log("returns", returns)
-                    console.log("airlines", airlines)
-                    return(
-                    <div key={item.destinationIATA}>
-                        <div>
-                            <div>
-                            {item.destinationIATA}
-                            </div>
-                        </div>
-                        <div>
-                             {convertTimestamp(item.flights[0].departureTime)} {item.startingIATA} ----------------> {convertTimestamp(item.flights[0].arrivalTime)} {item.destinationIATA}         ({item.flights[0].flightTime}) <div>{airlines}</div>
-                        </div>
-                        <div>
-                            {getAirlineName(returns.flights[0].airlineIATA)} 
-                            {convertTimestamp(returns.flights[0].departureTime)} {returns.startingIATA} ----------------> {convertTimestamp(returns.flights[0].arrivalTime)} {returns.destinationIATA}         ({returns.flights[0].flightTime})
-                        </div>
-                    </div>
-                )})}
+                    // const airlines = airlineName[index];
+                    // console.log("item", item)
+                    // console.log("returns", returns)
+                    // console.log("airlines", airlines)
+                    if (item.startingIATA === item.destinationIATA) {
+                        return null;
+                    }
+                    else {
+                        return (
+                            <Container maxwidth={"1000px"} padding={"12px"} key={item.destinationIATA}>
+                                <Row>
+                                    <Col size="12">
+                                        <div className="font">
+                                            <div>
+                                                <div>
+                                                    <strong className="twentypxfont">{item.flights[0].destinationCity} ({item.destinationIATA}) </strong> for ${item.flights[0].prices + returns.flights[0].prices}
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div className="floatleft mr-4">
+                                                    {item.flights[0].airlineIATA}
+                                                </div>
+                                                <div className="floatleft mr-1">
+                                                    {convertTimestamp(item.flights[0].departureTime)}
+                                                </div>
+                                                <div className="floatleft mr-3">
+                                                   <strong> {item.startingIATA} </strong> 
+                                                </div>
+                                                <div className="floatleft mr-3 arrow">
+                                                    <img src={Arrow} alt="arrow" className="arrow"></img>
+                                                </div>
+                                                <div className="floatleft mr-1">
+                                                {convertTimestamp(item.flights[0].arrivalTime)}
+                                                </div>
+                                                <div className="floatleft mr-4">
+                                                    <strong>{item.destinationIATA}</strong>
+                                                </div>
+                                                <div className="floatleft mr-1">
+                                                    ({item.flights[0].flightTime})
+                                                </div>
+                                                <div className="floatleft mr-2">
+                                                    <strong>${item.flights[0].prices}</strong>
+                                                </div>
+                                                <div className="dropdownparent"> 
+                                                    Show Other Options
+                                                    <div className="dropdown"> 
+                                                        <OtherOptions flightsInfo={item.flights}/>
+                                                    </div>
+                                                </div>
+                                                <div className="floatright">
+                                                    <BookButton link={item.flights[0].bookingLink} />
+                                                </div>
+                                            </div>
+                                            
+                                            <br />
+                                            <div>
+                                                <div className="floatleft mr-4">
+                                                    {returns.flights[0].airlineIATA}
+                                                </div>
+                                                <div className="floatleft mr-1">
+                                                    {convertTimestamp(returns.flights[0].departureTime)}
+                                                </div>
+                                                <div className="floatleft mr-3">
+                                                    <strong>{returns.startingIATA}</strong>
+                                                </div>
+                                                <div className="floatleft mr-3 arrow">
+                                                    <img src={Arrow} alt="arrow" className="arrow"></img>
+                                                </div> 
+                                                <div className="floatleft mr-1">
+                                                    {convertTimestamp(returns.flights[0].arrivalTime)}
+                                                </div>
+                                                <div className="floatleft mr-4">
+                                                    <strong>{returns.destinationIATA}</strong>
+                                                </div>
+                                                <div className="floatleft mr-2">
+                                                    ({returns.flights[0].flightTime})
+                                            </div>
+                                                <div className="floatleft mr-1">
+                                                    <strong>${returns.flights[0].prices}</strong>
+                                                </div>
+                                                <div className="dropdownparent"> 
+                                                    Show Other Options
+                                                    <div className="dropdown"> 
+                                                        <OtherOptions flightsInfo={item.flights}/>
+                                                    </div>
+                                                </div>
+                                                <div className="floatright">
+                                                    <BookButton link={returns.flights[0].bookingLink} />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </Col>
+                                </Row>
+                            </Container>
+                        )
+                    }
+                })}
             </div>
         );
-        
+
     }
 }
 

@@ -10,7 +10,7 @@ const Op = Sequalize.Op;
 let queryResults = [];
 let clientReturnArray = [];
 let clientDepartureArray = [];
-
+let gCompletedKiwi = [];
 // API Routes
 router.use("/api", apiRoutes);
 
@@ -28,7 +28,10 @@ router.route('/api/search').post(function (req, res) {
         { ski: req.body.Ski },
         { quiet: req.body.Quiet },
         { kidfriendly: req.body.KidFriendly }]
-    }
+      },
+      and: {
+        code: [{[Op.ne]: [ req.body.from]}]
+      }
   }).then(function (dbFilter) {
     let initialres = dbFilter;
     db.destination.findAll({
@@ -53,7 +56,7 @@ router.route('/api/search').post(function (req, res) {
       // console.log(qRes)
     }).then(function (callkiwi) {
       //  console.log("this is the qRes data", qRes)
-      axiosKiwi(res);
+      axiosKiwi(res)
       // return qRes
     })
       .catch(function (err) {
@@ -95,7 +98,7 @@ async function axiosKiwi(searchRes) {
   let term = startLocal;
   let locale = "USD";
   let location_types = "airport";
-  let limit = "2";
+  let limit = "10";
   let active_only = "true";
   let sort = "price";
   let depArray = [];
@@ -133,7 +136,8 @@ async function axiosKiwi(searchRes) {
         departureTime: flight.dTime,
         flightTime: flight.fly_duration,
         arrivalTime: flight.aTime,
-        bookingLink: `www.kiwi.com/deep?affilid=test&from=${startLocal}&to=${endLocal[mappedFlightIndex]}&departure=${returnDate}`
+        bookingLink: `www.kiwi.com/deep?affilid=test&from=${startLocal}&to=${flight.flyTo}&departure=${returnDate}`,
+        destinationCity: flight.cityTo
         // ,stops: connections[0]
       }
     }))
@@ -178,7 +182,8 @@ async function axiosKiwi(searchRes) {
         departureTime: flight.dTime,
         flightTime: flight.fly_duration,
         arrivalTime: flight.aTime,
-        bookingLink: `www.kiwi.com/deep?affilid=test&from=${endLocal[mappedFlightIndex]}&to=${startLocal}&departure=${returnDate}`
+        bookingLink: `www.kiwi.com/deep?affilid=test&from=${flight.flyFrom}&to=${startLocal}&departure=${returnDate}`,
+        homeCity:flight.cityTo
         // ,stops: connections[0]
       }
     }))
@@ -188,15 +193,13 @@ async function axiosKiwi(searchRes) {
     clientReturnArray.push(retArray);
     return retSearchObj
   })
-
   //concat the dep and return SearchObjects
   const completedKiwi = Object.assign({departures: departureSearchObjs},{returns: returnSearchObjs})
+  // .then(searchRes => {res.json(completedKiwi)});
   searchRes.json(completedKiwi)
+  // gCompletedKiwi.push(completedKiwi)
 };
 console.log("clientDepartureArray:", clientDepartureArray);
 console.log("clientReturnArray:", clientReturnArray);
-
-
-
 
 module.exports = router;

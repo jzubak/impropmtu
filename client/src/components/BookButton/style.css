@@ -1,0 +1,14 @@
+.bookbutton{
+    border-width: 0px;
+    padding: 0px;
+    color: #3a878f;
+    background: rgba(76, 175, 80, 0)
+}
+
+.color{
+    color: #3a878f;
+}
+
+/* .color:hover{
+    color: #ef4b25;
+} */
