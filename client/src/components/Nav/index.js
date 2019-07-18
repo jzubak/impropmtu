@@ -16,7 +16,7 @@ import "./style.css"
       </a>
       <div>
       {!isAuthenticated && (
-        <button
+        <button className="font login"
           onClick={() =>
             loginWithRedirect({})
           }
@@ -25,7 +25,7 @@ import "./style.css"
         </button>
       )}
 
-      {isAuthenticated && <button onClick={() => logout()}>Log out</button>}
+      {isAuthenticated && <button className="font login" onClick={() => logout()}>Log out</button>}
     </div>
     </nav>
   );

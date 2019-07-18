@@ -33,29 +33,67 @@ function OtherOptions({ flightsInfo }) {
         return time;
     }
 
+    function getAirlineNameJanky (iataCode){
+        if (iataCode === "NK"){
+            return "Spirit Airlines"
+        }
+        if (iataCode === "F9"){
+            return "Frontier Airlines"
+        }
+        if (iataCode === "AA"){
+            return "American Airlines"
+        }
+        if (iataCode === "UA"){
+            return "United Airlines"
+        }
+        if (iataCode === "DL"){
+            return "Delta Airlines"
+        }
+        if (iataCode === "G4"){
+            return "Allegiant Airlines"
+        }
+        if (iataCode === "AS"){
+            return "Alaskan Airlines"
+        }
+        if (iataCode === "WN"){
+            return "Southwest Airlines"
+        }
+        if (iataCode === "B6"){
+            return "Jet Blue"
+        }
+        if (iataCode === "HA"){
+            return "Hawaian Airlines"
+        }
+        else {
+            return (iataCode)
+        }
+
+    }
+
     return(
         <div>
             {flightsInfo.map(item => (
-                <div className="font">
-                    <div className="floatleft mr-2">
-                        {item.airlineIATA}
+                <div className="row font">
+                    <div className="floatleft col-4">
+                        {getAirlineNameJanky(item.airlineIATA)}
                     </div>
-                    <div className="floatleft mr-2">
-                        {convertTimestamp(item.departureTime)}
+                    <div className="col-6"> 
+                        <div className="floatleft mr-1">
+                            {convertTimestamp(item.departureTime)}
+                        </div>
+                        <div className="floatleft mr-1 arrow">
+                            <img src={Arrow} alt="arrow" className="arrow"></img>
+                        </div>
+                        <div className="floatleft">
+                            {convertTimestamp(item.arrivalTime)}
+                        </div>
                     </div>
-                    <div className="floatleft mr-3 arrow">
-                        <img src={Arrow} alt="arrow" className="arrow"></img>
-                    </div>
-                    <div className="floatleft mr-3">
-                        {convertTimestamp(item.departureTime)}
-                    </div>
-                    <div className="floatleft mr-1">
-                        {item.flightTime}
-                    </div>
-                    <div className="floatleft mr-2">
-                        ${item.prices}
-                    </div>
-                    <br/>
+                        <div className="floatleft mr-1">
+                            {item.flightTime}
+                        </div>
+                        <div className="floatleft mr-1">
+                            <strong>${item.prices}</strong>
+                        </div>
                 </div>
             ))}
         </div>
