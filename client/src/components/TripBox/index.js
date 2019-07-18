@@ -94,7 +94,10 @@ function TripBox({ flightsInfo }) {
 
     if (flightsInfo.departures === undefined) {
         console.log("yay")
-        return null
+        return (                     
+            <Container maxwidth={"125px"} padding={"12px"}>
+                <div className="twentypxfont font">Searching</div>
+            </Container>)
     }
     else {
         return (
@@ -151,7 +154,11 @@ function TripBox({ flightsInfo }) {
                                                 <div className="col-3 dropdownparent"> 
                                                     Show Other Options
                                                     <div className="dropdown2"> 
-                                                        <OtherOptions flightsInfo={item.flights}/>
+                                                        <OtherOptions 
+                                                            flightsInfo={item.flights}
+                                                            departurecode = {item.startingIATA}
+                                                            arrivalcode = {item.destinationIATA}
+                                                        />
                                                     </div>
                                                 </div>
                                                 <div className="floatright">
@@ -191,7 +198,11 @@ function TripBox({ flightsInfo }) {
                                                 <div className="col-3 dropdownparent"> 
                                                     Show Other Options
                                                     <div className="dropdown2"> 
-                                                        <OtherOptions flightsInfo={returns.flights}/>
+                                                        <OtherOptions 
+                                                            flightsInfo = {returns.flights}
+                                                            departurecode = {returns.startingIATA}
+                                                            arrivalcode = {returns.destinationIATA}
+                                                            />
                                                     </div>
                                                 </div>
                                                 <div className="floatright">

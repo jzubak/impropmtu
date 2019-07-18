@@ -27,8 +27,8 @@ router.route('/api/search').post(function (req, res) {
         { historic: req.body.Historic },
         { ski: req.body.Ski },
         { quiet: req.body.Quiet },
-        { kidfriendly: req.body.KidFriendly }]
-    } === true
+        { kidfriendly: req.body.KidFriendly }]}
+    // === 1}
   }).then(function (dbFilter) {
     let initialres = dbFilter;
     db.destination.findAll({
@@ -194,10 +194,10 @@ async function axiosKiwi(searchRes) {
   //concat the dep and return SearchObjects
   const completedKiwi = Object.assign({ departures: departureSearchObjs }, { returns: returnSearchObjs })
   // .then(searchRes => {res.json(completedKiwi)});
-  searchRes.json(completedKiwi).finally(
+  searchRes.json(completedKiwi).end()
   // console.log('request done!', completedKiwi, "... def done")
   // gCompletedKiwi.push(completedKiwi)
-  )
+  
 };
 
 console.log("clientDepartureArray:", clientDepartureArray);

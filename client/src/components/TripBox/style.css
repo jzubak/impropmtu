@@ -4,13 +4,13 @@
 
 .dropdown2{
     position: absolute;
-    left: -460px;
+    left: -470px;
     display: none;
     border-width: 2px;
     border-color: #3a878f;
     border-style: solid;
     border-radius: 10px;
-    width: 620px;
+    width: 630px;
     background-color: white;
     z-index: +3;
     padding-right: 10px;
