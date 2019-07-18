@@ -1,3 +1,7 @@
+.arrow{
+    height:10px;
+}
+
 .dropdown{
     position: absolute;
     display: none;
@@ -5,20 +9,8 @@
     border-color: #3a878f;
     border-style: solid;
     border-radius: 10px;
-    background-color: white;
-    padding: 7px;
-    z-index: +3;
 }
 
 .dropdownparent:hover .dropdown{
     display: block;
 }
-
-.dropdownparent:hover{
-    cursor: pointer;
-}
-
-li{
-    list-style-type: none;
-}
-

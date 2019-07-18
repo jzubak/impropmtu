@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 // import { Link } from "react-router-dom";
-import { Col, Row, Container } from "../components/Grid";
+import {Container } from "../components/Grid";
 import Parameters from "../components/SearchParameters";
 import TripBox from "../components/TripBox";
 // import API from "../utils/API";
@@ -92,15 +92,12 @@ class Results extends Component {
           />
         </Container>
         {/* I wanna see words here {this.props.flightInfo.departures[0].flights[0].airlineIATA} */}
-        <Container>
-          <Row>
-            <Col size="md-12">
-              <TripBox flightsInfo={this.props.flightInfo}/>
-            </Col>
-          </Row>
-          {/* <button onClick={this.pullfromlocalstorage}>Run Function</button> */}
-          <button onClick={this.showState}>show state</button>
-        </Container>
+
+        <TripBox flightsInfo={this.props.flightInfo}/>
+
+        {/* <button onClick={this.pullfromlocalstorage}>Run Function</button> */}
+        {/* <button onClick={this.showState}>show state</button> */}
+
       </div>
     );
   }

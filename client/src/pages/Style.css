@@ -43,6 +43,10 @@
     float: right;
 }
 
+.floatleft{
+    float: left;
+}
+
 .display{
     display:block;
 }
