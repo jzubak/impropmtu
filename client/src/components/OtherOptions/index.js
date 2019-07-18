@@ -3,7 +3,7 @@ import Arrow from "../../images/Arrow.png"
 import "./style.css"
 
 
-function OtherOptions({ flightsInfo }) {
+function OtherOptions({ flightsInfo, departurecode , arrivalcode }) {
 
     function convertTimestamp(timestamp) {
         var d = new Date(timestamp * 1000), // Convert the passed timestamp to milliseconds
@@ -79,13 +79,13 @@ function OtherOptions({ flightsInfo }) {
                     </div>
                     <div className="col-6"> 
                         <div className="floatleft mr-1">
-                            {convertTimestamp(item.departureTime)}
+                            <div className="floatleft mr-1">{convertTimestamp(item.departureTime)}</div><strong>{departurecode}</strong>
                         </div>
                         <div className="floatleft mr-1 arrow">
                             <img src={Arrow} alt="arrow" className="arrow"></img>
                         </div>
                         <div className="floatleft">
-                            {convertTimestamp(item.arrivalTime)}
+                            <div className="floatleft mr-1">{convertTimestamp(item.arrivalTime)}</div> <strong>{arrivalcode}</strong>
                         </div>
                     </div>
                         <div className="floatleft mr-1">

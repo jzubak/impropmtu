@@ -2,12 +2,15 @@ import React from "react";
 
 function Footer() {
     const footer = {
-        height: "100px",
+        height: "76px",
         backgroundColor: "#353132",
+        color: "white",
+        textAlign: "center",
+        paddingTop: "10px"
     }
     
   return (
-    <div style={footer}></div>
+    <div className="font" style={footer}><div className="mt-3">© All rights reserved. Imporomptu</div></div>
   );
 }
 

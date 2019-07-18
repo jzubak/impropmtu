@@ -29,7 +29,7 @@ CREATE TABLE destinations (
     ski VARCHAR(1) NOT NULL,
     quiet VARCHAR(1) NOT NULL,
     kidfriendly VARCHAR(1) NOT NULL,
-    PRIMARY KEY (desinationsID),
+    PRIMARY KEY (destinationsID),
     airportID INT NOT NULL,
     url VARCHAR(255) NOT NULL,
 	  FOREIGN KEY fk_airport(airportID)
