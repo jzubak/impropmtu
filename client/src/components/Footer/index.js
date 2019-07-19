@@ -10,7 +10,7 @@ function Footer() {
     }
     
   return (
-    <div className="font" style={footer}><div className="mt-3">© All rights reserved. Imporomptu</div></div>
+    <div className="font" style={footer}><div className="mt-3">© All rights reserved. Impromptu</div></div>
   );
 }
 
