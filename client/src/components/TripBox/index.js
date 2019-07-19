@@ -103,7 +103,7 @@ function TripBox({ flightsInfo }) {
         return (
             <div>
                 {flightsInfo.departures.map((item, index) => {
-                    const returns = flightsInfo.returns[index];
+                    const returns = flightsInfo.returns[index]; 
                     // const airlines = airlineName[index];
                     // console.log("item", item)
                     // console.log("returns", returns)

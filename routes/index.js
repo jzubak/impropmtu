@@ -4,12 +4,12 @@ const axios = require("axios");
 const sequelize = require("sequelize");
 const Sequalize = require("Sequelize");
 const apiRoutes = require("./api");
-const db = require("../models");
+const db = require("../models"); 
 const Op = Sequalize.Op;
 
-let queryResults = [];
+let queryResults = []; 
 let clientReturnArray = [];
-let clientDepartureArray = [];
+let clientDepartureArray = [];  
 let gCompletedKiwi = [];
 // API Routes
 router.use("/api", apiRoutes);
@@ -18,8 +18,8 @@ router.use("/api", apiRoutes);
 router.route('/api/search').post(function (req, res) {
   db.airport.findAll({
     where: {
-      [Op.or]:
-        [{ beach: req.body.Beach },
+      [Op.or]: 
+        [{ beach: req.body.Beach }, 
         { urban: req.body.Urban },
         { hiking: req.body.Hiking },
         { food: req.body.Food },
